@@ -1,0 +1,30 @@
+
+services:
+  parascene-core:
+    build: .
+    container_name: parascene-core
+    ports:
+      - "3000:2367"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - ./db/data:/app/db/data 
+    environment:
+      - NODE_ENV=dev
+      - PORT=2367
+      - DB_ADAPTER=sqlite
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+    networks:
+      - parascene-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    networks:
+      - parascene-network
+
+networks:
+  parascene-network:
+    driver: bridge

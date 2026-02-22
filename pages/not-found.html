@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>parascene - not found</title>
+	<style>
+		main {
+			min-height: calc(100vh - 72px);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 24px;
+			padding-bottom: 96px;
+		}
+
+		.not-found-inner {
+			max-width: 560px;
+			width: 100%;
+		}
+
+		.not-found-graphic {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 8px;
+		}
+
+		.not-found-graphic svg {
+			width: 56px;
+			height: 56px;
+		}
+	</style>
+</head>
+
+<body>
+	<!--APP_HEADER-->
+
+	<app-modal-profile></app-modal-profile>
+	<app-modal-credits></app-modal-credits>
+	<app-modal-notifications></app-modal-notifications>
+
+	<!--APP_MOBILE_BOTTOM_NAV-->
+
+	<main>
+		<div class="route-empty feed-empty-state not-found-inner">
+			<div class="feed-empty-icon not-found-graphic" aria-hidden="true">
+				<svg viewBox="0 0 24 24" fill="none">
+					<path d="M7 3h7l3 3v15H7V3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+						stroke-linejoin="round" />
+					<path d="M14 3v3h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+						stroke-linejoin="round" />
+					<path d="M9 12h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+						stroke-linejoin="round" />
+					<path d="M9 16h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+						stroke-linejoin="round" />
+				</svg>
+			</div>
+
+			<div class="route-empty-title">Woops!&nbsp;&nbsp;Not Found!!</div>
+			<div class="route-empty-message">We couldn’t find what you were looking for.</div>
+			<a class="route-empty-button" href="/creations" data-back-btn>Back</a>
+		</div>
+	</main>
+
+	<script>
+		(function () {
+			const btn = document.querySelector('[data-back-btn]');
+			if (!(btn instanceof HTMLElement)) return;
+			btn.addEventListener('click', (e) => {
+				e.preventDefault();
+				if (window.history && window.history.length > 1) {
+					window.history.back();
+					return;
+				}
+				window.location.href = '/creations';
+			});
+		})();
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,220 @@
+/* Try page: share page body with index header; loading box instead of image/overlay */
+
+/* index.css .landing-page section sets max-width: 1200px; override so share hero stays 720px like share page */
+.share-main .share-hero,
+.try-main .share-hero {
+	max-width: 720px;
+}
+
+.try-main {
+	padding: 14px 18px 10em;
+	margin: 0 auto;
+	max-width: 1240px;
+}
+
+/* Same body look as share page so main content matches */
+body.try-page {
+	margin: 0;
+	font-family: var(--font-family);
+	background: var(--bg);
+	min-height: 100vh;
+}
+
+/* Transparent header until scroll (same effect as landing page, without .landing-page on body) */
+body.try-page header {
+	background: transparent !important;
+	border-bottom: 1px solid transparent;
+	backdrop-filter: none !important;
+	-webkit-backdrop-filter: none !important;
+	transition: background 0.3s ease, border-bottom-color 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+body.try-page header::before {
+	display: none !important;
+}
+
+body.try-page .hamburger-button,
+body.try-page .mobile-menu,
+body.try-page .mobile-menu-backdrop {
+	display: none !important;
+}
+
+body.try-page header.scrolled {
+	background: linear-gradient(to bottom,
+			rgba(246, 247, 251, 1) 0%,
+			rgba(246, 247, 251, 0.95) 20%,
+			rgba(246, 247, 251, 0.8) 50%,
+			rgba(246, 247, 251, 0.4) 100%) !important;
+	border-bottom: 1px solid rgba(226, 232, 240, 0.3);
+	backdrop-filter: blur(20px) saturate(180%) !important;
+	-webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+}
+
+body.try-page header.scrolled::before {
+	display: block !important;
+}
+
+@media (prefers-color-scheme: dark) {
+	body.try-page header.scrolled {
+		background: linear-gradient(to bottom,
+				rgba(26, 22, 40, 1) 0%,
+				rgba(26, 22, 40, 0.95) 20%,
+				rgba(26, 22, 40, 0.8) 50%,
+				rgba(26, 22, 40, 0.4) 100%) !important;
+		border-bottom: 1px solid rgba(61, 53, 82, 0.3);
+		backdrop-filter: blur(20px) saturate(180%) !important;
+		-webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+	}
+}
+
+/* Generating state: faded base + colored blobs moving around (ChatGPT-style) */
+.try-generating {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	overflow: hidden;
+	background: color-mix(in srgb, var(--text) 6%, var(--bg));
+}
+
+.try-generating-blob {
+	position: absolute;
+	width: 75%;
+	height: 75%;
+	border-radius: 50%;
+	filter: blur( clamp(70px, 14vw, 120px) );
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+/* Different colors: violet, blue, teal, coral (low saturation) */
+.try-generating-blob-1 {
+	background: hsl(265 28% 68% / 0.5);
+	top: -20%;
+	left: -15%;
+	animation: try-blob-float-1 4s ease-in-out infinite;
+}
+
+.try-generating-blob-2 {
+	background: hsl(205 30% 62% / 0.5);
+	bottom: -20%;
+	right: -15%;
+	animation: try-blob-float-2 4.5s ease-in-out infinite;
+}
+
+.try-generating-blob-3 {
+	background: hsl(165 25% 58% / 0.5);
+	top: 25%;
+	right: -10%;
+	animation: try-blob-float-3 3.8s ease-in-out infinite;
+}
+
+.try-generating-blob-4 {
+	background: hsl(340 30% 66% / 0.5);
+	bottom: 15%;
+	left: -10%;
+	animation: try-blob-float-4 4.2s ease-in-out infinite;
+}
+
+@keyframes try-blob-float-1 {
+	0%, 100% { transform: translate(0, 0) scale(1); }
+	25% { transform: translate(45%, 60%) scale(1.15); }
+	50% { transform: translate(80%, 20%) scale(0.9); }
+	75% { transform: translate(30%, -40%) scale(1.05); }
+}
+
+@keyframes try-blob-float-2 {
+	0%, 100% { transform: translate(0, 0) scale(1); }
+	25% { transform: translate(-55%, -50%) scale(0.95); }
+	50% { transform: translate(-80%, 30%) scale(1.1); }
+	75% { transform: translate(-25%, 55%) scale(1); }
+}
+
+@keyframes try-blob-float-3 {
+	0%, 100% { transform: translate(0, 0) scale(1); }
+	33% { transform: translate(-60%, 45%) scale(1.1); }
+	66% { transform: translate(-35%, -50%) scale(0.9); }
+}
+
+@keyframes try-blob-float-4 {
+	0%, 100% { transform: translate(0, 0) scale(1); }
+	25% { transform: translate(70%, -35%) scale(1.05); }
+	50% { transform: translate(40%, 50%) scale(0.95); }
+	75% { transform: translate(-50%, 10%) scale(1.1); }
+}
+
+.try-generating-text {
+	font-size: clamp(1rem, 2.2vw, 1.15rem);
+	font-weight: 600;
+	color: var(--text);
+	position: relative;
+	z-index: 1;
+	text-shadow: 0 1px 2px var(--bg);
+}
+
+/* Loading box (if used elsewhere) uses .share-image for size; no overlay, just centered spinner */
+.try-loading-box {
+	position: relative;
+}
+
+.try-loading-box .route-loading-spinner {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+/* Prompt (from URL) above the share-value copy; hide when empty */
+.try-prompt-callout {
+	margin-bottom: 18px;
+}
+
+.try-prompt-callout:has(.try-prompt:empty) {
+	display: none;
+}
+
+.try-prompt-label {
+	display: block;
+	font-size: 0.85em;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var(--text-muted);
+	margin-bottom: 4px;
+}
+
+.try-prompt {
+	margin: 0 0 6px;
+	font-weight: 600;
+	color: var(--text);
+}
+
+.try-prompt:empty {
+	display: none;
+}
+
+/* Result image (replaces generating state) */
+.try-result-image {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 1;
+	object-fit: cover;
+	border-radius: 10px;
+	background: color-mix(in srgb, var(--text) 6%, var(--bg));
+}
+
+/* Error state when generation fails or times out */
+.try-error {
+	margin: 0;
+	padding: 1.5rem;
+	text-align: center;
+	font-weight: 600;
+	color: var(--text);
+	background: color-mix(in srgb, var(--text) 8%, var(--bg));
+	border-radius: 10px;
+	min-height: 200px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>parascene - art, tech, and community</title>
+	<link rel="stylesheet" href="/pages/index.css" />
+</head>
+
+<body class="landing-page">
+	<app-navigation>
+		<a href="/auth#login" class="header-auth-link">Login</a>
+		<a href="/auth#signup" class="header-auth-link btn-primary">Sign Up</a>
+	</app-navigation>
+
+	<main class="landing-page">
+		<!-- Hero Section (with featured input + Generate) -->
+		<section class="hero">
+			<div class="hero-content">
+				<div class="hero-body">
+					<h1 class="hero-title">AI + Imagination</h1>
+					<p class="hero-subtitle">Parascene is a community for those that love creating and sharing with
+						technology.</p>
+					<form class="landing-generate-form" action="/create" method="get" role="search">
+						<input type="text" name="prompt" class="landing-generate-input"
+							placeholder="Enter your idea here..." aria-label="Enter your idea" autocomplete="off" />
+						<button type="submit" class="landing-generate-btn">
+							<span>Create</span>
+							<svg class="landing-generate-btn-icon" width="20" height="20" viewBox="0 0 24 24"
+								fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+								stroke-linejoin="round" aria-hidden="true">
+								<path d="M5 12h14" />
+								<path d="M13 6l6 6-6 6" />
+							</svg>
+						</button>
+					</form>
+					<p class="landing-generate-copy cta-note">No payment required — start creating now.</p>
+				</div>
+				<nav class="hero-pills" aria-label="Jump to section">
+					<a href="#who-its-for" class="hero-pill">Who It's For</a>
+					<a href="#community-creators" class="hero-pill">Community & Creators</a>
+					<a href="#powerful-generative-tools" class="hero-pill">Powerful Generative Tools</a>
+					<a href="#get-involved" class="hero-pill">Get Involved</a>
+				</nav>
+			</div>
+		</section>
+
+		<!-- Who It's For -->
+		<section id="who-its-for" class="use-cases fade-in-section">
+			<div class="section-header">
+				<h2>Who It's For</h2>
+				<p>Whether you want to create, be entertained, or simply be involved</p>
+			</div>
+			<div class="use-cases-grid">
+				<div class="use-case-card fade-in-item">
+					<h3>For Creators</h3>
+					<p>Use AI and ML to bring your creative visions to life. The technology amplifies your creativity,
+						making creation more accessible and fun.</p>
+				</div>
+				<div class="use-case-card fade-in-item">
+					<h3>For Explorers</h3>
+					<p>Discover amazing creations from the community. Our algorithms help you find content that
+						entertains and inspires you.</p>
+				</div>
+				<div class="use-case-card fade-in-item">
+					<h3>For Participants</h3>
+					<p>Get involved in a vibrant community. Share, comment, follow, and be part of something bigger.
+						Involvement is what makes us strong.</p>
+				</div>
+				<div class="use-case-card fade-in-item">
+					<h3>For Everyone</h3>
+					<p>No matter your skill level or background, if you're interested in creativity, technology, or
+						community—you belong here.</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Community & Creators -->
+		<section id="community-creators" class="features fade-in-section">
+			<div class="section-header">
+				<h2>Community & Creators</h2>
+				<p>Join creators, artists, and enthusiasts who share, inspire, and collaborate.</p>
+			</div>
+			<div class="features-grid">
+				<div class="feature-card fade-in-item">
+					<div class="feature-icon">👥</div>
+					<h3>Vibrant Community</h3>
+					<p>This is where technology and human creativity come together.</p>
+				</div>
+				<div class="feature-card fade-in-item">
+					<div class="feature-icon">🎭</div>
+					<h3>Entertainment & Involvement</h3>
+					<p>Whether you're here to create, explore, or simply be entertained, there's always something
+						happening in the community.</p>
+				</div>
+				<div class="feature-card fade-in-item">
+					<div class="feature-icon">✨</div>
+					<h3>Creative Expression</h3>
+					<p>Express yourself freely. Our technology removes barriers, letting you focus on what matters—your
+						creativity and vision.</p>
+				</div>
+			</div>
+			<p class="features-more fade-in-item">
+				Want to know more? <a href="/help">Learn more about how parascene works</a>.
+			</p>
+		</section>
+
+		<!-- Powerful Generative Tools -->
+		<section id="powerful-generative-tools" class="features fade-in-section">
+			<div class="section-header">
+				<h2>Powerful Generative Tools</h2>
+				<p>AI, machine learning, and algorithms that make creation accessible to everyone.</p>
+			</div>
+			<div class="features-grid">
+				<div class="feature-card fade-in-item">
+					<div class="feature-icon">🤖</div>
+					<h3>AI-Powered Creation</h3>
+					<p>Advanced artificial intelligence algorithms transform your ideas into stunning visuals.</p>
+				</div>
+				<div class="feature-card fade-in-item">
+					<div class="feature-icon">🧠</div>
+					<h3>Machine Learning</h3>
+					<p>Our ML models learn from the community, getting smarter with every creation.</p>
+				</div>
+				<div class="feature-card fade-in-item">
+					<div class="feature-icon">⚙️</div>
+					<h3>Smart Algorithms</h3>
+					<p>Sophisticated algorithms power discovery, recommendations, and creation workflows.</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Get Involved -->
+		<section id="get-involved" class="how-it-works fade-in-section">
+			<div class="section-header">
+				<h2>Get Involved</h2>
+				<p>We make it easy to get involved and start creating</p>
+			</div>
+			<div class="steps">
+				<div class="step fade-in-item">
+					<div class="step-number">1</div>
+					<h3>Become a Member</h3>
+					<p>Join our community of creators. No barriers, no gatekeeping—just people who love to create and be
+						entertained.</p>
+				</div>
+				<div class="step fade-in-item">
+					<div class="step-number">2</div>
+					<h3>Explore & Discover</h3>
+					<p>See what the community is creating. Our algorithms help you find content that matches your
+						interests and inspires you.</p>
+				</div>
+				<div class="step fade-in-item">
+					<div class="step-number">3</div>
+					<h3>Create & Share</h3>
+					<p>Leverage generative tools from your peers to bring ideas to life, then share your creations with
+						the community. Get feedback and connect with others.</p>
+				</div>
+			</div>
+		</section>
+
+
+
+		<!-- CTA Section -->
+		<section class="cta-section fade-in-section">
+			<div class="cta-content">
+				<h2>Join the Scene</h2>
+				<p>Come forge the future of creativity and technology with us. Parascene is where what you make finds its audience, where discovery and creation sit side by side, and where the next wave of culture gets built—not by algorithms alone, but by people showing up, making things, and passing them on.</p>
+				<div class="cta-buttons">
+					<a href="/auth#signup" class="btn-primary btn-large">Get Started</a>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<script src="/pages/index.js" defer></script>
+</body>
+
+</html>

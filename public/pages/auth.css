@@ -1,0 +1,147 @@
+/* Page-specific styles for auth.html */
+
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+}
+
+.auth-logo {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 24px;
+	margin-top: -90px;
+}
+
+.auth-logo-link {
+	display: inline-block;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.auth-logo .logo {
+	display: block;
+}
+
+.auth-logo .logo-text {
+	font-family: var(--font-family);
+	font-size: 36px;
+	font-weight: 700;
+	font-style: italic;
+	fill: var(--text);
+	letter-spacing: -0.02em;
+}
+
+main {
+	max-width: 420px;
+	width: 100%;
+	margin: 0;
+	padding: 24px 20px;
+}
+
+section[id] {
+	display: none;
+}
+
+#fail,
+#suspended {
+	display: none;
+}
+
+#fail:target,
+#suspended:target {
+	display: block;
+}
+
+section[id="login"] {
+	display: block;
+}
+
+section[id="login"]:target {
+	display: block;
+}
+
+section[id="signup"]:target {
+	display: block;
+}
+
+section[id="signup"]:target ~ section {
+	display: none;
+}
+
+section[id="forgot"]:target {
+	display: block;
+}
+
+section[id="forgot"]:target ~ section {
+	display: none;
+}
+
+section[id="reset"]:target {
+	display: block;
+}
+
+section[id="reset"]:target ~ section {
+	display: none;
+}
+
+section[id="sent"]:target {
+	display: block;
+}
+
+section[id="sent"]:target ~ section {
+	display: none;
+}
+
+/* Forgot password link: login only, below signup line, centered and muted */
+.auth-forgot-wrap {
+	margin-top: 8px;
+	margin-bottom: 0;
+}
+
+section[id="login"] .auth-forgot-link {
+	color: var(--text-muted);
+	font-weight: 500;
+	font-size: 0.875rem;
+}
+
+section[id="login"] .auth-forgot-link:hover {
+	color: var(--text);
+}
+
+/* Auth Page Typography Hierarchy */
+
+/* Large, bold header */
+section[id] h3 {
+	font-size: 1.75rem;
+	font-weight: 700;
+	margin-bottom: 32px;
+	color: var(--text);
+	letter-spacing: -0.01em;
+}
+
+/* Smaller, lighter, muted labels */
+section[id] form label {
+	font-size: 0.8125rem;
+	font-weight: 400;
+	color: var(--text-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+/* More space before submit button */
+section[id] form button[type="submit"] {
+	margin-top: 8px;
+}
+
+/* Auth page links - no underline, accent color, bold */
+section[id] p {
+	text-align: center;
+}
+
+section[id] p a {
+	text-decoration: none;
+	color: var(--accent);
+	font-weight: 700;
+}

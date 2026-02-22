@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>parascene - admin</title>
+	<link rel="stylesheet" href="/pages/admin.css" />
+	<script type="module" src="/pages/admin.js"></script>
+</head>
+
+<body>
+	<app-navigation show-notifications show-profile show-mobile-menu default-route="todo">
+		<a data-route="todo">Todo</a>
+		<a data-route="users">Users</a>
+		<a data-route="emails">Emails</a>
+		<a data-route="related">Algo</a>
+		<a data-route="connect">Connect</a>
+	</app-navigation>
+
+	<app-modal-profile></app-modal-profile>
+	<app-modal-credits></app-modal-credits>
+	<app-modal-notifications></app-modal-notifications>
+	<app-modal-server></app-modal-server>
+	<app-modal-user></app-modal-user>
+	<app-modal-todo></app-modal-todo>
+
+	<main>
+		<section>
+			<app-route-todo data-route-content="todo"></app-route-todo>
+			<app-route-users data-route-content="users"></app-route-users>
+			<app-route-servers data-route-content="connect"></app-route-servers>
+			<div id="related-page" data-route-content="related" class="route-content admin-related-page">
+				<h3>Algo</h3>
+				<app-tabs>
+					<tab data-id="transitions" label="Click-next" default>
+						<div id="related-transitions-container" class="admin-related-transitions-container"></div>
+					</tab>
+					<tab data-id="graph" label="Graph">
+						<div id="related-graph-container" class="admin-related-graph-container"></div>
+					</tab>
+					<tab data-id="settings" label="Settings">
+						<div id="related-settings-container" class="admin-related-settings-container"></div>
+					</tab>
+				</app-tabs>
+			</div>
+			<div id="emails-page" data-route-content="emails" class="route-content admin-emails-page">
+				<h3>Emails</h3>
+				<app-tabs>
+					<tab data-id="sends" label="Automated Sends" default>
+						<div id="email-sends-container" class="admin-emails-sends-panel"></div>
+					</tab>
+					<tab data-id="templates" label="Templates">
+						<div id="email-templates-container" class="admin-emails-templates-panel"></div>
+					</tab>
+					<tab data-id="send" label="Manual Send">
+						<div id="email-send-container" class="admin-emails-send-panel">
+							<p class="admin-email-send-intro">Send a test email to verify templates and delivery, or send a Feature Request response.</p>
+							<form id="email-send-form" class="admin-email-send-form">
+								<section class="admin-settings-section">
+									<div class="admin-settings-field">
+										<label class="admin-settings-label" for="email-send-template">Template</label>
+										<select id="email-send-template" name="template" class="admin-settings-input" required>
+											<option value="helloFromParascene">Hello from parascene</option>
+											<option value="commentReceived">Comment received</option>
+											<option value="commentReceivedDelegated">Comment received (delegated)</option>
+											<option value="featureRequest">Feature request</option>
+											<option value="featureRequestFeedback">Feature Request Feedback</option>
+											<option value="passwordReset">Password reset</option>
+											<option value="digestActivity">Digest activity</option>
+											<option value="welcome">Welcome</option>
+											<option value="firstCreationNudge">First creation nudge</option>
+											<option value="reengagement">Re-engagement</option>
+											<option value="creationHighlight">Creation highlight</option>
+											<option value="supportReport">Support report</option>
+										</select>
+									</div>
+									<div class="admin-settings-field">
+										<label class="admin-settings-label" for="email-send-recipient">Recipient</label>
+										<select id="email-send-recipient" name="recipient" class="admin-settings-input" aria-describedby="email-send-recipient-desc">
+											<option value="">— Select user —</option>
+											<option value="manual" selected>Enter manually…</option>
+										</select>
+										<p id="email-send-recipient-desc" class="admin-detail">Choose a user from the list or enter an email and name manually.</p>
+									</div>
+									<div id="email-send-recipient-selected" class="admin-email-send-recipient-selected" hidden>
+										<p class="admin-email-send-to-display" aria-live="polite"></p>
+									</div>
+									<div id="email-send-recipient-manual" class="admin-settings-field" hidden>
+										<label class="admin-settings-label" for="email-send-to">To</label>
+										<input type="email" id="email-send-to" name="to" class="admin-settings-input"
+											placeholder="you@example.com" />
+										<label class="admin-settings-label" for="email-send-feedback-name">Recipient name</label>
+										<input type="text" id="email-send-feedback-name" name="recipientName" class="admin-settings-input" placeholder="e.g. Alex" />
+									</div>
+									<div id="email-send-feedback-field" class="admin-settings-field" hidden>
+										<label class="admin-settings-label" for="email-send-feedback-original">Original feature request</label>
+										<textarea id="email-send-feedback-original" name="originalRequest" class="admin-settings-input admin-email-send-textarea" data-autogrow rows="8" placeholder="Paste or type the original feature request…"></textarea>
+										<label class="admin-settings-label" for="email-send-feedback-message">Reply</label>
+										<textarea id="email-send-feedback-message" name="message" class="admin-settings-input admin-email-send-textarea" data-autogrow rows="8" placeholder="Type your response to the feature requester…"></textarea>
+									</div>
+									<div class="admin-settings-actions">
+										<button type="submit" id="email-send-submit" class="btn-primary admin-settings-save">
+											<span class="admin-settings-save-label">Send email</span>
+											<span class="admin-settings-save-spinner" aria-hidden="true"></span>
+										</button>
+									</div>
+								</section>
+							</form>
+							<div id="email-send-status" class="admin-email-send-status" role="alert" aria-live="polite"></div>
+						</div>
+					</tab>
+					<tab data-id="settings" label="Settings">
+						<div class="admin-emails-settings-panel">
+							<section class="admin-settings-section">
+								<span class="admin-settings-section-title">Delivery</span>
+								<div class="admin-settings-row">
+									<div class="form-switch admin-settings-switch" role="switch"
+										aria-label="Send to test address">
+										<input type="checkbox" id="email-use-test-recipient" class="form-switch-input"
+											aria-hidden="true" tabindex="-1" />
+										<span class="form-switch-track"><span class="form-switch-thumb"></span></span>
+									</div>
+									<div class="admin-settings-label-desc">
+										<label for="email-use-test-recipient" class="admin-settings-label-inline">Send
+											to test address (delivered@resend.dev)</label>
+										<p class="admin-detail">When on, all lifecycle and transactional emails go to
+											Resend's test address instead of real users.</p>
+									</div>
+								</div>
+							</section>
+							<section class="admin-settings-section">
+								<span class="admin-settings-section-title">Digest &amp; cron</span>
+								<div class="admin-settings-row">
+									<div class="form-switch admin-settings-switch" role="switch" aria-label="Dry run">
+										<input type="checkbox" id="email-dry-run" class="form-switch-input"
+											aria-hidden="true" tabindex="-1" />
+										<span class="form-switch-track"><span class="form-switch-thumb"></span></span>
+									</div>
+									<div class="admin-settings-label-desc">
+										<label for="email-dry-run" class="admin-settings-label-inline">Dry run (record
+											only, do not send)</label>
+										<p class="admin-detail">Cron writes to the DB but does not send digest emails.
+										</p>
+									</div>
+								</div>
+								<div class="admin-settings-field">
+									<label class="admin-settings-label" for="digest-utc-windows">Digest windows (also
+										applies to other emails)</label>
+									<input type="text" id="digest-utc-windows" class="admin-settings-input"
+										placeholder="09:00,18:00" />
+									<p class="admin-detail">Comma-separated times in your local timezone (HH:MM or HH).
+										Minutes are optional; only hours are used. Converted to UTC when saved.</p>
+								</div>
+								<div class="admin-settings-field">
+									<label class="admin-settings-label" for="max-digests-per-user-per-day">Max digests
+										per user per day</label>
+									<input type="number" id="max-digests-per-user-per-day" class="admin-settings-input"
+										min="0" step="1" />
+									<p class="admin-detail">Cap per user per UTC day.</p>
+								</div>
+								<div class="admin-settings-field">
+									<label class="admin-settings-label" for="digest-activity-hours-lookback">Activity
+										lookback (hours)</label>
+									<input type="number" id="digest-activity-hours-lookback"
+										class="admin-settings-input" min="1" step="1" />
+									<p class="admin-detail">Hours to look back for unread activity when building digest
+										candidates.</p>
+								</div>
+							</section>
+							<section class="admin-settings-section">
+								<span class="admin-settings-section-title">Welcome &amp; nudges</span>
+								<div class="admin-settings-field">
+									<label class="admin-settings-label" for="welcome-email-delay-hours">Welcome email
+										delay (hours)</label>
+									<input type="number" id="welcome-email-delay-hours" class="admin-settings-input"
+										min="0" step="1" />
+									<p class="admin-detail">Hours after signup before a user is eligible for the welcome
+										email. Use 0 for immediate.</p>
+								</div>
+							</section>
+							<section class="admin-settings-section">
+								<span class="admin-settings-section-title">Re-engagement</span>
+								<div class="admin-settings-field">
+									<label class="admin-settings-label" for="reengagement-inactive-days">Inactive days
+										before eligible</label>
+									<input type="number" id="reengagement-inactive-days" class="admin-settings-input"
+										min="1" step="1" />
+									<p class="admin-detail">Days of inactivity before a user can receive a "we miss you"
+										email.</p>
+								</div>
+								<div class="admin-settings-field">
+									<label class="admin-settings-label" for="reengagement-cooldown-days">Cooldown
+										(days)</label>
+									<input type="number" id="reengagement-cooldown-days" class="admin-settings-input"
+										min="1" step="1" />
+									<p class="admin-detail">Minimum days between re-engagement emails per user.</p>
+								</div>
+							</section>
+							<section class="admin-settings-section">
+								<span class="admin-settings-section-title">Creation highlight</span>
+								<div class="admin-settings-field">
+									<label class="admin-settings-label" for="creation-highlight-lookback-hours">Lookback
+										(hours)</label>
+									<input type="number" id="creation-highlight-lookback-hours"
+										class="admin-settings-input" min="1" step="1" />
+									<p class="admin-detail">Hours to look back for comments to consider a creation
+										"hot".</p>
+								</div>
+								<div class="admin-settings-field">
+									<label class="admin-settings-label" for="creation-highlight-cooldown-days">Cooldown
+										(days)</label>
+									<input type="number" id="creation-highlight-cooldown-days"
+										class="admin-settings-input" min="1" step="1" />
+									<p class="admin-detail">Minimum days between creation highlight emails per user.</p>
+								</div>
+								<div class="admin-settings-field">
+									<label class="admin-settings-label" for="creation-highlight-min-comments">Minimum
+										comments</label>
+									<input type="number" id="creation-highlight-min-comments"
+										class="admin-settings-input" min="0" step="1" />
+									<p class="admin-detail">Only send a highlight email when a creation has at least
+										this many comments in the lookback window.</p>
+								</div>
+							</section>
+							<div class="admin-settings-actions">
+								<button type="button" id="settings-save" class="btn-primary admin-settings-save">
+									<span class="admin-settings-save-label">Save settings</span>
+									<span class="admin-settings-save-spinner" aria-hidden="true"></span>
+								</button>
+							</div>
+						</div>
+					</tab>
+				</app-tabs>
+			</div>
+		</section>
+	</main>
+</body>
+
+</html>

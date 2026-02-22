@@ -1,0 +1,130 @@
+# CSS Style Guidelines
+
+## Core Principle: Standardization and Consistency
+
+**Always prioritize standardization and reusability over duplication.**
+
+- **Don't reinvent the wheel** - Before writing new CSS, check if similar styles already exist that can be reused or extended
+- **Minimize CSS duplication** - Avoid writing the same styles in multiple places; extract common patterns to global.css
+- **Maintain consistency** - Use the same spacing, colors, typography, and patterns across all pages and components
+- **Think globally first** - When adding styles, consider: "Could this be useful elsewhere?" If yes, put it in global.css
+- **Standardize patterns** - If you find yourself writing similar CSS multiple times, create a reusable class or pattern in global.css
+- **Keep CSS minimal** - The goal is to have as little CSS as possible while maintaining a consistent, polished experience across the entire app
+
+When adding new styles, always ask:
+1. Does a similar pattern already exist?
+2. Can this be made reusable?
+3. Will this need to be used elsewhere?
+4. Can this be standardized across the app?
+
+## Formatting
+- Use tabs (not spaces) for indentation
+- Use single-line property declarations (one property per line)
+- Use lowercase for property names and values
+- Use single quotes for strings when needed
+- Add blank lines between logical sections/selectors
+- Use consistent spacing around colons and semicolons
+
+## Structure
+- Group related selectors together
+- Place media queries immediately after the base styles they modify
+- Use CSS custom properties (CSS variables) for colors, spacing, and other repeated values
+- Prefer mobile-first responsive design (base styles for mobile, then @media (min-width) for larger screens)
+- When adding mobile-specific styles, use @media (max-width: 768px) for mobile breakpoint
+
+## Padding/Margin
+- Use fixed pixel values for padding/margin when appropriate (e.g., `padding-bottom: 96px` for mobile bottom nav spacing)
+- Avoid complex calc() expressions unless necessary for safe-area-inset or dynamic calculations
+- Prefer simple, readable values
+
+## Border Radius Standardization
+Use consistent border-radius values across the app:
+- `4px` - Small interactive elements (close buttons, small badges)
+- `6px` - Buttons, inputs, small cards, badges
+- `8px` - Medium cards, images
+- `10px` - Standard cards, containers
+- `12px` - Larger cards, sections
+- `14px` - Modals, large containers
+- `50%` - Circular elements (avatars, icons)
+- `999px` - Pill-shaped elements (tabs, rounded buttons)
+
+When in doubt, use: `6px` for buttons/inputs, `10px` for cards, `14px` for modals.
+
+## Selectors
+- Use class selectors over ID selectors
+- Keep specificity low when possible
+- Use semantic class names that describe purpose, not appearance
+
+## Comments
+- Use comments to separate major sections
+- Comment complex or non-obvious CSS logic
+- Keep comments concise and clear
+
+## Media Queries
+- Place media queries near the related base styles
+- Use consistent breakpoints: 768px for mobile/tablet, larger values for desktop
+- Group media query styles together when modifying the same selector
+
+## CSS Organization: Where Styles Belong
+
+### global.css
+Use for styles that are:
+- **Shared across multiple pages** (header, footer, navigation, modals, buttons, forms)
+- **Web component styles** (app-navigation, app-navigation-mobile, app-modal-profile, app-modal-credits, app-modal-notifications, etc.)
+- **Global layout and typography** (body, html, base element styles)
+- **CSS custom properties** (CSS variables in :root)
+- **Reusable utility classes** (route-empty, btn-primary, etc.)
+- **Common patterns used in multiple places** (cards, lists, forms, modals)
+
+Examples:
+- `.header`, `.mobile-bottom-nav` - used across pages
+- `.feed-card`, `.route-empty` - reusable patterns
+- `app-navigation`, `app-navigation-mobile`, `app-modal-profile`, `app-modal-credits`, `app-modal-notifications` - web component styles
+
+### Page-specific CSS (e.g., index.css, creator.css, consumer.css)
+Use for styles that are:
+- **Unique to a single page** and not reusable elsewhere
+- **Page-specific layout overrides** (e.g., landing page header behavior)
+- **Page-specific body classes** (e.g., `body.landing-page`)
+- **Styles that only make sense in the context of that specific page**
+
+Examples:
+- `body.landing-page header` - landing page specific header styling
+- `body.creation-detail-page`, `.creation-detail-route`, `.creation-detail-hero` - creation detail page specific styles
+- `.publish-modal` - modal only used on creation detail page
+- Page-specific hero sections, feature grids, etc. that don't appear elsewhere
+
+### Web Component CSS
+- **All web component styles go in global.css**, not in separate files
+- Components are JavaScript classes (e.g., `AppNavigation`, `AppModalProfile`) and their styles are defined in global.css using their tag names (e.g., `app-navigation`, `app-modal-profile`)
+- Use the component's tag name as the selector (e.g., `app-navigation`, `app-route-feed`)
+- **Exception: Shadow DOM components** - Components using shadow DOM (e.g., `app-modal-credits`, `app-modal-profile`, `app-modal-notifications`) may have inline styles in their JS files due to style isolation, but should follow the same standardized patterns (modal structure, border-radius values, spacing) as defined in global.css
+
+### Decision Guidelines
+1. **If it's used in 2+ pages** → global.css
+2. **If it's a web component** → global.css
+3. **If it's a reusable pattern** → global.css
+4. **If it's truly page-specific and won't be reused** → page CSS file
+5. **When in doubt, prefer global.css** - it's easier to move styles later than to duplicate them
+
+## Example Structure
+```css
+.selector {
+	property: value;
+	another-property: value;
+}
+
+@media (max-width: 768px) {
+	.selector {
+		mobile-property: value;
+	}
+}
+```
+
+## TODO Files
+
+When the user asks about TODOs or wants to manage TODO items:
+- **Read and edit** `_docs/TODO.json` - This is the main TODO data file that contains the list of tasks
+- **Read** `_docs/TODO.md` - This contains documentation about how TODO.json works (cost, impact, rebalancing, etc.)
+- The TODO.json file is used by the API route at `api_routes/todo.js` to serve and manage TODO items
+- Do not modify TODO.md when TODO.json changes - TODO.md is documentation only

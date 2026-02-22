@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Redo Create Page",
+    "description": "hide most of what's there behind some advanced toggle.  Make a customer-facing/slick create page.",
+    "cost": 50,
+    "impact": 44,
+    "dependsOn": [],
+    "starred": false
+  },
+  {
+    "name": "Landing: community creations images",
+    "description": "Show example or featured community creations to anonymous visitors (no login).",
+    "cost": 1,
+    "impact": 1,
+    "dependsOn": [],
+    "starred": false
+  },
+  {
+    "name": "Join from Share pays out",
+    "description": "The original creator gets some credits.\nThe sharer gets credits.\nWhat to do about mutated creations?",
+    "cost": 100,
+    "impact": 49,
+    "dependsOn": [],
+    "starred": false
+  }
+]

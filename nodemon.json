@@ -1,0 +1,10 @@
+{
+  "watch": [
+    "api",
+    "api_routes",
+    "db",
+    "pages",
+    "email"
+  ],
+  "ext": "js,json"
+}

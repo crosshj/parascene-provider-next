@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>parascene - creation</title>
+	<link rel="stylesheet" href="/pages/creations.css" />
+</head>
+
+<body class="creation-detail-page">
+	<!--APP_HEADER-->
+
+	<app-modal-profile></app-modal-profile>
+	<app-modal-credits></app-modal-credits>
+	<app-modal-notifications></app-modal-notifications>
+	<app-modal-publish></app-modal-publish>
+	<app-modal-creation-details></app-modal-creation-details>
+	<app-modal-share></app-modal-share>
+	<app-modal-tip-creator></app-modal-tip-creator>
+
+	<!-- Landscape: single modal with placeholder or image + bottom buttons -->
+	<dialog class="creation-detail-dialog landscape-modal" data-landscape-modal aria-labelledby="landscape-modal-title">
+		<div class="landscape-modal-title-row">
+			<h2 id="landscape-modal-title" class="dialog-title">Landscape (16:9)</h2>
+			<button type="button" class="landscape-debug-btn" data-landscape-copy-debug aria-label="Copy debug info for support">
+				<span class="landscape-debug-icon" aria-hidden="true">?</span>
+				<span class="landscape-debug-label">debug</span>
+			</button>
+		</div>
+		<button class="modal-close" type="button" aria-label="Close" data-landscape-close-btn>
+			<svg class="modal-close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+				stroke-linecap="round" stroke-linejoin="round">
+				<line x1="18" y1="6" x2="6" y2="18"></line>
+				<line x1="6" y1="6" x2="18" y2="18"></line>
+			</svg>
+		</button>
+		<div class="landscape-modal-content" data-landscape-content>
+			<div class="landscape-placeholder" data-landscape-placeholder>
+				<div class="landscape-placeholder-spinner" data-landscape-placeholder-spinner style="display: none;" aria-label="Loading" role="status"></div>
+				<p class="landscape-placeholder-message landscape-generate-prompt" data-landscape-generate-prompt style="display: none;">Generate a 16:9 landscape version of this creation.</p>
+				<p class="landscape-placeholder-message landscape-error" data-landscape-error style="display: none;"></p>
+			</div>
+			<img class="landscape-image" data-landscape-image alt="Landscape" style="display: none;" />
+		</div>
+		<div class="landscape-modal-actions" data-landscape-modal-actions>
+			<button type="button" class="btn-primary" data-landscape-primary-btn>
+				<span class="landscape-btn-spinner" data-landscape-btn-spinner style="display: none;" aria-hidden="true"></span>
+				<span class="landscape-btn-text" data-landscape-btn-text>Generate</span>
+			</button>
+			<button type="button" class="btn-outlined landscape-menu-item-danger" data-landscape-remove-btn style="display: none;">Remove</button>
+		</div>
+	</dialog>
+
+	<!-- Support report: send debug info to administrator -->
+	<dialog class="creation-detail-dialog debug-copied-modal" data-debug-copied-modal aria-labelledby="debug-copied-title">
+		<h2 id="debug-copied-title" class="dialog-title">Support</h2>
+		<p class="debug-copied-message" data-debug-copied-message>We'll send a report to the administrator to help troubleshoot.</p>
+		<div class="debug-copied-summary-wrap">
+			<label for="debug-copied-summary" class="debug-copied-summary-label">Summarize the issue</label>
+			<textarea id="debug-copied-summary" class="debug-copied-summary" data-debug-copied-summary rows="6" placeholder="Describe what you see (e.g. blank screen, missing button), what you expected, and your device or browser if relevant. This will be included in the report sent to support."></textarea>
+		</div>
+		<p class="debug-copied-status" data-debug-copied-status role="alert" aria-live="polite"></p>
+		<div class="dialog-actions">
+			<button type="button" class="btn-secondary" data-debug-copied-cancel>Cancel</button>
+			<button type="button" class="btn-primary" data-debug-copied-send>Send</button>
+		</div>
+	</dialog>
+
+	<!-- Landscape cost confirm: small modal with Cancel / Continue -->
+	<dialog class="creation-detail-dialog landscape-cost-dialog" data-landscape-cost-dialog aria-labelledby="landscape-cost-dialog-title">
+		<h2 id="landscape-cost-dialog-title" class="dialog-title">Landscape</h2>
+		<p class="landscape-cost-dialog-message" data-landscape-cost-dialog-message></p>
+		<div class="dialog-actions">
+			<button type="button" class="btn-secondary" data-landscape-cost-cancel>Cancel</button>
+			<button type="button" class="btn-primary" data-landscape-cost-continue>Continue</button>
+		</div>
+	</dialog>
+
+	<!--APP_MOBILE_BOTTOM_NAV-->
+
+	<main>
+		<div class="creation-detail-route">
+			<div class="creation-detail-hero">
+				<div class="creation-detail-background" data-background></div>
+				<div class="creation-detail-image-wrapper image-loading">
+					<img class="creation-detail-image" data-image alt="Creation" />
+				</div>
+			</div>
+			<div class="creation-detail-footer">
+				<div class="creation-detail-actions" style="opacity: 0; visibility: hidden; pointer-events: none;">
+					<button type="button" class="creation-detail-action-btn btn-primary" data-publish-btn disabled>
+						<svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+							style="margin-right: 6px; vertical-align: middle;">
+							<path d="M1.5 8L14.5 1.5L10.5 14.5L8 9L1.5 8Z" stroke="currentColor" stroke-width="1.5"
+								stroke-linecap="round" stroke-linejoin="round" fill="none" />
+						</svg>
+						Publish
+					</button>
+					<button type="button" class="creation-detail-action-btn btn-outlined" data-edit-btn disabled style="display: none;">
+						<svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+							style="margin-right: 6px; vertical-align: middle;">
+							<path d="M11.5 2.5L13.5 4.5L5.5 12.5H3.5V10.5L11.5 2.5Z" stroke="currentColor"
+								stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+						</svg>
+						Edit
+					</button>
+					<button type="button" class="creation-detail-action-btn btn-outlined" data-mutate-btn style="display: none;">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+							style="margin-right: 6px; vertical-align: middle;">
+							<path d="M12 2l1.2 4.3L17.5 8l-4.3 1.2L12 13.5l-1.2-4.3L6.5 8l4.3-1.7L12 2Z"
+								stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+							<path d="M19 13l.7 2.4L22 16l-2.3.6L19 19l-.7-2.4L16 16l2.3-.6L19 13Z"
+								stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+						</svg>
+						Mutate
+					</button>
+					<button type="button" class="creation-detail-action-btn btn-outlined" data-share-btn style="display: none;">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+							style="margin-right: 6px; vertical-align: middle;">
+							<circle cx="18" cy="5" r="2" stroke="currentColor" stroke-width="1.5" />
+							<circle cx="6" cy="12" r="2" stroke="currentColor" stroke-width="1.5" />
+							<circle cx="18" cy="19" r="2" stroke="currentColor" stroke-width="1.5" />
+							<path d="M8 12l8-6" stroke="currentColor" stroke-width="1.5"
+								stroke-linecap="round" stroke-linejoin="round" />
+							<path d="M8 12l8 6" stroke="currentColor" stroke-width="1.5"
+								stroke-linecap="round" stroke-linejoin="round" />
+						</svg>
+						Share
+					</button>
+					<button type="button" class="creation-detail-action-btn btn-outlined" data-unpublish-btn disabled style="display: none;">
+						<svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+							style="margin-right: 6px; vertical-align: middle;">
+							<path d="M1.5 8L14.5 1.5L10.5 14.5L8 9L1.5 8Z" stroke="currentColor" stroke-width="1.5"
+								stroke-linecap="round" stroke-linejoin="round" fill="none" />
+						</svg>
+						Un-publish
+					</button>
+					<button type="button" class="creation-detail-action-btn btn-outlined" data-retry-btn style="display: none;">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+							style="margin-right: 6px; vertical-align: middle;">
+							<path d="M3 12a9 9 0 1 0 3-6.708" stroke="currentColor" stroke-width="1.5"
+								stroke-linecap="round" stroke-linejoin="round" />
+							<polyline points="3 4 3 10 9 10" stroke="currentColor" stroke-width="1.5"
+								stroke-linecap="round" stroke-linejoin="round" />
+						</svg>
+						Retry
+					</button>
+					<button type="button" class="creation-detail-action-btn btn-outlined btn-danger-outlined" data-delete-btn disabled>
+						<svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+							style="margin-right: 6px; vertical-align: middle;">
+							<path
+								d="M2 4H14M12.5 4V13.5C12.5 14.3284 11.8284 15 11 15H5C4.17157 15 3.5 14.3284 3.5 13.5V4M5.5 4V2.5C5.5 1.67157 6.17157 1 7 1H9C9.82843 1 10.5 1.67157 10.5 2.5V4M6.5 7.5V11.5M9.5 7.5V11.5"
+								stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+								stroke-linejoin="round" />
+						</svg>
+						Delete
+					</button>
+					<!--
+					<button class="creation-detail-action-btn">⚙️ Adjust & Crop</button>
+					<button class="creation-detail-action-btn">⋮ More</button>
+					-->
+				</div>
+				<div class="creation-detail-info" data-detail-content>
+					<div class="route-empty route-loading">
+						<div class="route-loading-spinner" aria-label="Loading" role="status"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<script type="module" src="/pages/creation-detail.js"></script>
+</body>
+
+</html>

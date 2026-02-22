@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>parascene - create</title>
+	<link rel="stylesheet" href="/pages/creations.css" />
+</head>
+
+<body class="create-page">
+	<!--APP_HEADER-->
+
+	<app-modal-profile></app-modal-profile>
+	<app-modal-credits></app-modal-credits>
+	<app-modal-notifications></app-modal-notifications>
+	<app-modal-server></app-modal-server>
+	<app-navigation-mobile></app-navigation-mobile>
+
+	<main>
+		<div class="create-content">
+			<app-tabs active="text-to-image">
+				<tab label="Text-To-Image" data-id="text-to-image" default>
+					<h1 class="create-title">What do you want to create?</h1>
+					<div class="create-prompt-wrap">
+						<textarea class="create-prompt-input prompt-editor" placeholder="Describe your creation..."
+							rows="3" data-autogrow="true"></textarea>
+						<a href="#" class="create-prompt-clear" aria-label="Clear field" data-prompt-clear>clear</a>
+					</div>
+					<!--
+					<div class="create-action-pills">
+						<button type="button" class="create-pill create-pill-surprise">Surprise Me</button>
+						<button type="button" class="create-pill create-pill-inspiration">
+							<span class="create-pill-icon" aria-hidden="true"></span>
+							Inspiration
+						</button>
+					</div>
+					-->
+					<button type="button" class="create-btn-generate btn-primary" disabled>Create Image</button>
+					<div class="create-style-divider">
+						<span class="create-style-divider-text">Choose a style</span>
+					</div>
+					<div class="create-style-section">
+						<div class="create-style-cards" role="list">
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="none"><span
+										class="create-style-card-label">None</span></div>
+								<div class="create-style-card" role="listitem" data-key="default"><span
+										class="create-style-card-label">Default</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="isometricVoxel"><span
+										class="create-style-card-label">Isometric Voxel</span></div>
+								<div class="create-style-card" role="listitem" data-key="cinematic"><span
+										class="create-style-card-label">Cinematic</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="realistic-anime"><span
+										class="create-style-card-label">Realistic Anime</span></div>
+								<div class="create-style-card" role="listitem" data-key="artistic-portrait"><span
+										class="create-style-card-label">Artistic Portrait</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="striking"><span
+										class="create-style-card-label">Striking</span></div>
+								<div class="create-style-card" role="listitem" data-key="2-5d-anime"><span
+										class="create-style-card-label">2.5D Anime</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="anime-v2"><span
+										class="create-style-card-label">Anime v2</span></div>
+								<div class="create-style-card" role="listitem" data-key="hyperreal"><span
+										class="create-style-card-label">Hyperreal</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="vibrant"><span
+										class="create-style-card-label">Vibrant</span></div>
+								<div class="create-style-card" role="listitem" data-key="epic-origami"><span
+										class="create-style-card-label">Epic Origami</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="3d-game-v2"><span
+										class="create-style-card-label">3D Game v2</span></div>
+								<div class="create-style-card" role="listitem" data-key="color-painting"><span
+										class="create-style-card-label">Color Painting</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="mecha"><span
+										class="create-style-card-label">Mecha</span></div>
+								<div class="create-style-card" role="listitem" data-key="cgi-character"><span
+										class="create-style-card-label">CGI Character</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="epic"><span
+										class="create-style-card-label">Epic</span></div>
+								<div class="create-style-card" role="listitem" data-key="dark-fantasy"><span
+										class="create-style-card-label">Dark Fantasy</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="modern-comic"><span
+										class="create-style-card-label">Modern Comic</span></div>
+								<div class="create-style-card" role="listitem" data-key="abstract-curves"><span
+										class="create-style-card-label">Abstract Curves</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="bon-voyage"><span
+										class="create-style-card-label">Bon Voyage</span></div>
+								<div class="create-style-card" role="listitem" data-key="cubist-v2"><span
+										class="create-style-card-label">Cubist v2</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="detailed-gouache"><span
+										class="create-style-card-label">Detailed Gouache</span></div>
+								<div class="create-style-card" role="listitem" data-key="neo-impressionist"><span
+										class="create-style-card-label">Neo Impressionist</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="pop-art"><span
+										class="create-style-card-label">Pop Art</span></div>
+								<div class="create-style-card" role="listitem" data-key="anime"><span
+										class="create-style-card-label">Anime</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="candy-v2"><span
+										class="create-style-card-label">Candy v2</span></div>
+								<div class="create-style-card" role="listitem" data-key="photo"><span
+										class="create-style-card-label">Photo</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="bw-portrait"><span
+										class="create-style-card-label">B&W Portrait</span></div>
+								<div class="create-style-card" role="listitem" data-key="color-portrait"><span
+										class="create-style-card-label">Color Portrait</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="oil-painting"><span
+										class="create-style-card-label">Oil Painting</span></div>
+								<div class="create-style-card" role="listitem" data-key="cosmic"><span
+										class="create-style-card-label">Cosmic</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="sinister"><span
+										class="create-style-card-label">Sinister</span></div>
+								<div class="create-style-card" role="listitem" data-key="candy"><span
+										class="create-style-card-label">Candy</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="cubist"><span
+										class="create-style-card-label">Cubist</span></div>
+								<div class="create-style-card" role="listitem" data-key="3d-game"><span
+										class="create-style-card-label">3D Game</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="fantasy"><span
+										class="create-style-card-label">Fantasy</span></div>
+								<div class="create-style-card" role="listitem" data-key="gouache"><span
+										class="create-style-card-label">Gouache</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="matte"><span
+										class="create-style-card-label">Matte</span></div>
+								<div class="create-style-card" role="listitem" data-key="charcoal"><span
+										class="create-style-card-label">Charcoal</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="horror"><span
+										class="create-style-card-label">Horror</span></div>
+								<div class="create-style-card" role="listitem" data-key="surreal"><span
+										class="create-style-card-label">Surreal</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="steampunk"><span
+										class="create-style-card-label">Steampunk</span></div>
+								<div class="create-style-card" role="listitem" data-key="cyberpunk"><span
+										class="create-style-card-label">Cyberpunk</span></div>
+							</div>
+							<div class="create-style-column">
+								<div class="create-style-card" role="listitem" data-key="synthwave"><span
+										class="create-style-card-label">Synthwave</span></div>
+								<div class="create-style-card" role="listitem" data-key="heavenly"><span
+										class="create-style-card-label">Heavenly</span></div>
+							</div>
+						</div>
+						<div class="create-style-dots" aria-hidden="true">
+							<span class="create-style-dot is-active"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+							<span class="create-style-dot"></span>
+						</div>
+					</div>
+				</tab>
+				<tab label="Image Edit" data-id="image-edit">
+					<h1 class="create-title">What do you want to change?</h1>
+					<div class="create-image-edit-wrap">
+						<div class="create-image-edit-box">
+							<div class="create-image-edit-area" role="button" tabindex="0" data-choose-image aria-label="Choose image">
+								<span class="create-image-edit-placeholder">Choose image</span>
+							</div>
+						</div>
+						<a href="#" class="create-change-image-link" id="create-change-image-link">change image</a>
+					</div>
+					<div class="create-prompt-wrap">
+						<textarea class="create-prompt-input prompt-editor" placeholder="Describe your changes..."
+							rows="3" data-autogrow="true"></textarea>
+						<a href="#" class="create-prompt-clear" aria-label="Clear field" data-prompt-clear>clear</a>
+					</div>
+					<button type="button" class="create-btn-generate btn-primary" disabled>Edit Image</button>
+				</tab>
+			</app-tabs>
+		</div>
+		<footer class="create-page-footer">
+			<a href="/create" class="create-switch-to-advanced" id="create-switch-to-advanced">advanced mode</a>
+		</footer>
+	</main>
+	<script>
+		(function () {
+			var link = document.getElementById('create-switch-to-advanced');
+			if (link) {
+				link.addEventListener('click', function (e) {
+					e.preventDefault();
+					document.cookie = 'create_editor=; path=/; max-age=0';
+					window.location.href = '/create';
+				});
+			}
+		})();
+		(function () {
+			var el = document.querySelector('.create-style-cards');
+			if (!el) return;
+			var columns = el.querySelectorAll('.create-style-column');
+			if (!columns.length) return;
+			var dotsWrap = el.closest('.create-style-section').querySelector('.create-style-dots');
+			var dots = dotsWrap ? dotsWrap.querySelectorAll('.create-style-dot') : [];
+			var step = columns[0].offsetWidth + (parseFloat(getComputedStyle(el).gap) || 12);
+			var snapTimer;
+			function updateDots() {
+				var index = Math.round(el.scrollLeft / step);
+				index = Math.max(0, Math.min(index, columns.length - 4));
+				for (var i = 0; i < dots.length; i++) {
+					dots[i].classList.toggle('is-active', i >= index && i < index + 4);
+				}
+			}
+			function snapToNearest() {
+				var nearest = Math.round(el.scrollLeft / step) * step;
+				el.scrollTo({ left: nearest, behavior: 'auto' });
+				updateDots();
+			}
+			function scheduleSnap() {
+				updateDots();
+				clearTimeout(snapTimer);
+				snapTimer = setTimeout(snapToNearest, 50);
+			}
+			el.addEventListener('scroll', scheduleSnap, { passive: true });
+			if ('onscrollend' in el) {
+				el.addEventListener('scrollend', function () {
+					snapToNearest();
+				});
+			}
+			updateDots();
+		})();
+	</script>
+</body>
+
+</html>

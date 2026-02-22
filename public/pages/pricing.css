@@ -1,0 +1,491 @@
+/* Pricing page – only styles that differ from shared app/global; uses creations.css + global.css */
+
+/* Narrower content width for pricing (global main is 1400px) */
+body.pricing-page main {
+	max-width: 720px;
+}
+
+/* Guest header: same look as /try (transparent until scroll) */
+body.pricing-page-guest header {
+	background: transparent !important;
+	border-bottom: 1px solid transparent;
+	backdrop-filter: none !important;
+	-webkit-backdrop-filter: none !important;
+	transition: background 0.3s ease, border-bottom-color 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+body.pricing-page-guest header::before {
+	display: none !important;
+}
+
+body.pricing-page-guest .hamburger-button,
+body.pricing-page-guest .mobile-menu,
+body.pricing-page-guest .mobile-menu-backdrop {
+	display: none !important;
+}
+
+body.pricing-page-guest header.scrolled {
+	background: linear-gradient(to bottom,
+			rgba(246, 247, 251, 1) 0%,
+			rgba(246, 247, 251, 0.95) 20%,
+			rgba(246, 247, 251, 0.8) 50%,
+			rgba(246, 247, 251, 0.4) 100%) !important;
+	border-bottom: 1px solid rgba(226, 232, 240, 0.3);
+	backdrop-filter: blur(20px) saturate(180%) !important;
+	-webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+}
+
+body.pricing-page-guest header.scrolled::before {
+	display: block !important;
+}
+
+@media (prefers-color-scheme: dark) {
+	body.pricing-page-guest header.scrolled {
+		background: linear-gradient(to bottom,
+				rgba(26, 22, 40, 1) 0%,
+				rgba(26, 22, 40, 0.95) 20%,
+				rgba(26, 22, 40, 0.8) 50%,
+				rgba(26, 22, 40, 0.4) 100%) !important;
+		border-bottom: 1px solid rgba(61, 53, 82, 0.3);
+		backdrop-filter: blur(20px) saturate(180%) !important;
+		-webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+	}
+}
+
+/* Hide header and description until we know state (pricing vs success) – prevents flash */
+body.pricing-page main:not(.pricing-ready):not(.pricing-success-state) .route-header {
+	display: none;
+}
+
+/* Loading state: spinner hidden for first ~2s, then fades in if still loading */
+.pricing-loading {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 48px 24px;
+	min-height: 120px;
+	opacity: 0;
+	transition: opacity 0.25s ease;
+}
+
+.pricing-loading.pricing-loading-delayed-show {
+	opacity: 1;
+}
+
+.pricing-loading .route-loading-spinner {
+	animation-delay: 0s;
+	opacity: 1;
+}
+
+.pricing-content {
+	display: none;
+}
+
+main.pricing-ready .pricing-loading,
+main.pricing-success-state .pricing-loading {
+	display: none;
+}
+
+main.pricing-ready .pricing-content {
+	display: block;
+}
+
+/* Success state: thank-you view (header updated in JS, only this content shown) */
+.pricing-success-state-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 32px;
+	width: 100%;
+}
+
+.pricing-success-state-content[hidden] {
+	display: none;
+}
+
+/* When showing success state, hide the tier grid and CTAs; header stays in same place (no centering) */
+main.pricing-success-state .pricing-content {
+	display: none !important;
+}
+
+main.pricing-success-state .pricing-success-state-content {
+	display: flex;
+}
+
+.pricing-success-message {
+	width: 100%;
+	max-width: 420px;
+	padding: 28px 32px;
+	border-radius: 12px;
+	border: 1px solid var(--border);
+	background: color-mix(in srgb, var(--surface-strong) 85%, rgba(34, 197, 94, 0.12));
+	color: var(--text);
+	box-sizing: border-box;
+}
+
+.pricing-success-message-title {
+	font-weight: 600;
+	margin: 0 0 16px;
+	font-size: 1.125rem;
+}
+
+.pricing-success-message p {
+	margin: 0 0 14px;
+	font-size: 0.95rem;
+	line-height: 1.55;
+	color: var(--text-muted);
+}
+
+.pricing-success-message p:last-of-type {
+	margin-bottom: 0;
+}
+
+.pricing-success-actions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 12px;
+	margin-top: 24px;
+	padding-top: 20px;
+	border-top: 1px solid var(--border);
+}
+
+.pricing-success-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 20px;
+	border-radius: 6px;
+	font-size: 0.95rem;
+	font-weight: 500;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+	border: 1px solid transparent;
+}
+
+.pricing-success-btn-primary {
+	background: var(--surface-strong);
+	color: var(--text);
+	border-color: var(--border);
+}
+
+.pricing-success-btn-primary:hover {
+	background: color-mix(in srgb, var(--surface-strong) 90%, var(--text));
+	border-color: var(--text-muted);
+}
+
+.pricing-success-btn-secondary {
+	background: transparent;
+	color: var(--text-muted);
+	border-color: var(--border);
+}
+
+.pricing-success-btn-secondary:hover {
+	color: var(--text);
+	border-color: var(--text-muted);
+}
+
+.pricing-success-btn:focus-visible {
+	outline: 2px solid var(--focus);
+	outline-offset: 2px;
+}
+
+/* Pricing grid and cards */
+.pricing-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 24px;
+	margin: 24px 0 32px;
+}
+
+/* Team message below tiers – use fixed values so mobile doesn’t get huge gaps (avoid vw/em for this block) */
+.pricing-team-message {
+	margin-top: 32px;
+	padding-top: 24px;
+	border-top: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+	.pricing-team-message {
+		margin-top: 24px;
+		padding-top: 20px;
+	}
+}
+
+.pricing-team-message-title {
+	font-size: 1rem;
+	font-weight: 600;
+	color: var(--text-muted);
+	margin: 0 0 12px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.pricing-team-message p:not(.pricing-team-message-attribution) {
+	margin: 0 0 12px;
+	font-size: 0.95rem;
+	line-height: 1.6;
+	color: var(--text);
+}
+
+.pricing-team-message-attribution {
+	font-size: 0.9rem;
+	color: var(--text-muted);
+	margin: 0;
+	font-style: italic;
+}
+
+.pricing-card {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: 12px;
+	padding: 24px;
+	box-shadow: var(--shadow);
+	display: flex;
+	flex-direction: column;
+}
+
+.pricing-card[data-pricing-tier="founder"] {
+	border-color: var(--accent);
+}
+
+.pricing-card h3 {
+	margin: 0 0 8px;
+	font-size: 1.15rem;
+	font-weight: 600;
+	color: var(--text);
+}
+
+/* Avatar/icon above price (shared) – fixed height so price lines align across cards */
+.pricing-avatar-preview {
+	min-height: 64px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 12px;
+	text-align: center;
+}
+
+.pricing-avatar-plain {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto;
+	background: var(--surface-strong);
+}
+
+.pricing-avatar-plain svg,
+.pricing-avatar-plain .pricing-avatar-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.pricing-card .pricing-price {
+	font-size: 1.75rem;
+	font-weight: 700;
+	color: var(--text);
+	margin: 0 0 16px;
+}
+
+.pricing-card .pricing-price span {
+	font-size: 0.95rem;
+	font-weight: 500;
+	color: var(--text-muted);
+}
+
+.pricing-card ul {
+	flex: 1 0 auto;
+	margin: 0 0 20px;
+	padding-left: 1.25rem;
+	list-style: disc;
+}
+
+.pricing-card li {
+	font-size: 0.9rem;
+	margin-bottom: 8px;
+}
+
+/* Founder-only features – bold text matches CTA button color */
+.pricing-card[data-pricing-tier="founder"] .pricing-feature-founder strong {
+	color: var(--accent);
+}
+
+.pricing-card .btn-primary,
+.pricing-card .btn-secondary {
+	width: 100%;
+	justify-content: center;
+	margin-top: 8px;
+	border-radius: 6px;
+	font-weight: 500;
+}
+
+.pricing-card .btn-secondary {
+	background: var(--surface-strong);
+	border: 1px solid var(--border);
+	color: var(--text);
+}
+
+.pricing-card .btn-secondary:hover {
+	background: var(--surface);
+	border-color: var(--accent);
+	color: var(--text);
+}
+
+/* Unlock Founder: use global .btn-primary style; only make the link look like a button (same padding as global button) */
+.pricing-card a.btn-primary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 16px;
+	text-decoration: none;
+}
+
+.pricing-current-badge {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	font-size: 0.95rem;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	text-align: center;
+	color: var(--text-muted);
+	background: var(--surface-strong);
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	padding: 8px 12px;
+	margin-top: 8px;
+}
+
+.pricing-card [data-pricing-cta-free],
+.pricing-card [data-pricing-cta-founder] {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: auto;
+}
+
+/* Switch to Free: hidden by default; only visible when plan is Founder */
+.pricing-card [data-pricing-cta-free] [data-pricing-cta-free-switch] {
+	display: none;
+	width: fit-content;
+	min-width: 10rem;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.pricing-card [data-pricing-cta-free] [data-pricing-cta-free-switch].pricing-cta-visible {
+	display: inline-flex;
+}
+
+/* Founder flair preview on Founder card (above price) */
+.pricing-founder-flair-preview {
+	text-align: center;
+}
+
+.founder-flair-mock {
+	position: relative;
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	width: 64px;
+	height: 64px;
+	margin: 0 auto;
+}
+
+/* Founder flair – ring, badge, and feature highlights use this palette */
+.pricing-card[data-pricing-tier="founder"],
+.founder-flair-mock {
+	--founder-flair-dark: #6300ff;
+	--founder-flair-mid: #ff00fb;
+	--founder-flair-top: #00f9ff;
+	--founder-flair-text: #ffffff;
+	--founder-flair-shadow: unset;
+}
+
+/* Ring tightly wrapped around avatar (no gap) – drawn via avatar ::before */
+.founder-flair-ring {
+	display: none;
+}
+
+.founder-flair-avatar {
+	position: relative;
+	width: 48px;
+	height: 48px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 4px;
+}
+
+/* Ring: gradient from dark (bottom, matches badge) to colorful top */
+.founder-flair-avatar::before {
+	content: '';
+	position: absolute;
+	inset: -3px;
+	border-radius: 50%;
+	background: linear-gradient(175deg,
+			var(--founder-flair-top) 0%,
+			var(--founder-flair-mid) 35%,
+			var(--founder-flair-dark) 95%),
+		white 100%;
+	pointer-events: none;
+}
+
+.founder-flair-avatar-inner {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	z-index: 0;
+	background: var(--surface-strong);
+}
+
+.founder-flair-avatar-inner svg,
+.founder-flair-avatar-inner .pricing-avatar-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+/* Badge: solid dark (same as bottom of ring) so ring and badge feel one band */
+.founder-flair-label {
+	position: absolute;
+	bottom: 7px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 50px;
+	box-sizing: border-box;
+	background: linear-gradient(151deg, var(--founder-flair-dark), var(--founder-flair-mid));
+	border-radius: 3px;
+	text-align: center;
+	font-size: 0.5rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--founder-flair-text);
+}
+
+@media (max-width: 768px) {
+	body.pricing-page main {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	.pricing-grid {
+		grid-template-columns: 1fr;
+	}
+}

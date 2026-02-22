@@ -1,0 +1,127 @@
+/* Shared layout for static content pages (ToS, Privacy, etc.) – not for pricing (use /pages/pricing.css) */
+
+body.static-page {
+	background: var(--bg);
+}
+
+.static-page main {
+	max-width: 720px;
+	margin: 0 auto;
+	padding: 32px 24px 64px;
+}
+
+@media (max-width: 768px) {
+	.static-page main {
+		padding: 24px 16px 48px;
+	}
+}
+
+.static-page .content-page-title {
+	font-size: clamp(1.75rem, 4vw, 2.25rem);
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	color: var(--text);
+	margin: 0 0 8px;
+}
+
+.static-page .content-page-subtitle {
+	font-size: 1rem;
+	color: var(--text-muted);
+	margin: 0 0 32px;
+	line-height: 1.5;
+}
+
+.static-page .content-section {
+	margin-bottom: 32px;
+}
+
+.static-page .content-section h2 {
+	font-size: 1.25rem;
+	font-weight: 600;
+	color: var(--text);
+	margin: 0 0 12px;
+	letter-spacing: -0.01em;
+}
+
+.static-page .content-section h3 {
+	font-size: 1.05rem;
+	font-weight: 600;
+	color: var(--text);
+	margin: 24px 0 8px;
+}
+
+.static-page .content-section p,
+.static-page .content-section li {
+	font-size: 0.95rem;
+	line-height: 1.65;
+	color: var(--text);
+	margin: 0 0 12px;
+}
+
+.static-page .content-section ul {
+	margin: 0 0 12px;
+	padding-left: 1.25rem;
+}
+
+.static-page .content-section li {
+	margin-bottom: 6px;
+}
+
+.static-page .content-section a {
+	color: var(--accent);
+	text-decoration: none;
+}
+
+.static-page .content-section a:hover {
+	text-decoration: underline;
+}
+
+/* Ensure link-styled buttons look like buttons (override default link underline/padding) */
+.static-page a.btn-primary,
+.static-page a.btn-secondary {
+	text-decoration: none;
+	padding: 8px 12px;
+	border-radius: 8px;
+	border: 1px solid transparent;
+	font-size: 0.95rem;
+	cursor: pointer;
+	box-sizing: border-box;
+}
+
+.static-page a.btn-primary {
+	border-color: var(--accent);
+}
+
+.static-page a.btn-secondary {
+	border-color: var(--border);
+	background: var(--surface);
+	color: var(--text);
+	box-shadow: var(--shadow);
+}
+
+.static-page a.btn-primary:hover {
+	text-decoration: none;
+}
+
+.static-page a.btn-secondary:hover {
+	text-decoration: none;
+	background: var(--surface-strong);
+	border-color: var(--accent);
+}
+
+.static-page .content-cta {
+	margin-top: 40px;
+	padding-top: 24px;
+	border-top: 1px solid var(--border);
+	text-align: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	justify-content: center;
+	align-items: center;
+}
+
+.static-page .content-cta .btn-primary,
+.static-page .content-cta .btn-secondary {
+	display: inline-flex;
+}

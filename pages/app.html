@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>parascene</title>
+	<link rel="stylesheet" href="/pages/creations.css" />
+</head>
+
+<body>
+	<app-navigation show-notifications show-profile show-create default-route="feed">
+		<a data-route="feed">Feed</a>
+		<a data-route="explore">Explore</a>
+		<a data-route="creations">Creations</a>
+		<a data-route="connect">Connect</a>
+	</app-navigation>
+
+	<app-modal-profile></app-modal-profile>
+	<app-modal-credits></app-modal-credits>
+	<app-modal-notifications></app-modal-notifications>
+	<app-modal-server></app-modal-server>
+	<app-navigation-mobile></app-navigation-mobile>
+
+	<main>
+		<section>
+			<app-route-feed data-route-content="feed"></app-route-feed>
+			<app-route-explore data-route-content="explore"></app-route-explore>
+			<app-route-creations data-route-content="creations"></app-route-creations>
+			<app-route-servers data-route-content="connect"></app-route-servers>
+		</section>
+	</main>
+</body>
+
+</html>

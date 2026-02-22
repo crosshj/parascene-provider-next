@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="theme-color" content="#242131" />
+	<title>Parascene - Try It</title>
+	<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/global.css" />
+	<script type="module" src="/global.js"></script>
+	<link rel="preload" href="/pages/share.css" as="style" />
+	<link rel="stylesheet" href="/pages/index.css" />
+	<link rel="stylesheet" href="/pages/share.css" />
+	<link rel="stylesheet" href="/pages/try.css" />
+</head>
+
+<body class="try-page share-page">
+	<app-navigation>
+		<a href="/auth#login" class="header-auth-link">Login</a>
+		<a href="/auth#signup" class="header-auth-link btn-primary">Sign Up</a>
+	</app-navigation>
+
+	<main class="try-main">
+		<section class="share-hero">
+			<div class="share-hero-media">
+				<div class="try-generating share-image" aria-live="polite" aria-busy="true">
+					<div class="try-generating-blob try-generating-blob-1" aria-hidden="true"></div>
+					<div class="try-generating-blob try-generating-blob-2" aria-hidden="true"></div>
+					<div class="try-generating-blob try-generating-blob-3" aria-hidden="true"></div>
+					<div class="try-generating-blob try-generating-blob-4" aria-hidden="true"></div>
+					<span class="try-generating-text">Generating your image…</span>
+				</div>
+			</div>
+
+			<div class="share-hero-copy">
+				<div class="try-prompt-callout">
+					<span class="try-prompt-label">Your prompt:</span>
+					<p class="try-prompt share-value" id="try-prompt"></p>
+				</div>
+				<p class="share-value try-benefits">
+					Sign up to save your creations, share with others, and come back anytime. Join a community of
+					creators and keep track of everything you make.
+				</p>
+
+				<div class="share-cta-row">
+					<a class="btn-primary btn-large" href="/auth#signup">Sign up</a>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<script>
+		(function () {
+			var p = document.getElementById('try-prompt');
+			if (p) {
+				var params = new URLSearchParams(window.location.search);
+				var prompt = params.get('prompt');
+				p.textContent = prompt != null ? prompt : '';
+			}
+		})();
+	</script>
+	<script type="module">
+		(function () {
+			var params = new URLSearchParams(window.location.search);
+			var prompt = params.get('prompt');
+			if (prompt == null || String(prompt).trim() === '') return;
+
+			var media = document.querySelector('.try-main .share-hero-media');
+			if (!media) return;
+
+			function setGenerating() {
+				media.innerHTML = '<div class="try-generating share-image" aria-live="polite" aria-busy="true">' +
+					'<div class="try-generating-blob try-generating-blob-1" aria-hidden="true"></div>' +
+					'<div class="try-generating-blob try-generating-blob-2" aria-hidden="true"></div>' +
+					'<div class="try-generating-blob try-generating-blob-3" aria-hidden="true"></div>' +
+					'<div class="try-generating-blob try-generating-blob-4" aria-hidden="true"></div>' +
+					'<span class="try-generating-text">Generating your image…</span></div>';
+			}
+
+			function showImage(url) {
+				media.innerHTML = '<img src="' + url.replace(/"/g, '&quot;') + '" alt="Generated image" class="try-result-image" />';
+			}
+
+			function showError(msg) {
+				media.innerHTML = '<p class="try-error">' + (msg || 'Something went wrong.') + '</p>';
+			}
+
+			var loadingStartTime = 0;
+			var minLoadingMs = 5000;
+
+			async function ensureMinLoadingTime() {
+				var elapsed = Date.now() - loadingStartTime;
+				if (elapsed < minLoadingMs) {
+					await new Promise(function (r) { setTimeout(r, minLoadingMs - elapsed); });
+				}
+			}
+
+			function logElapsed(label) {
+				var elapsed = Date.now() - loadingStartTime;
+				console.log('[Try] ' + label + ' in ' + (elapsed / 1000).toFixed(2) + 's');
+			}
+
+			async function run() {
+				loadingStartTime = Date.now();
+				console.log('[Try] Generation started');
+				var tz = typeof Intl !== 'undefined' && Intl.DateTimeFormat && Intl.DateTimeFormat().resolvedOptions && Intl.DateTimeFormat().resolvedOptions().timeZone ? Intl.DateTimeFormat().resolvedOptions().timeZone : '';
+				var screenHint = typeof window.screen !== 'undefined' ? window.screen.width + 'x' + window.screen.height : '';
+				await fetch('/api/policy/seen', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					credentials: 'include',
+					body: JSON.stringify({ tz: tz, screen: screenHint })
+				}).catch(function () { });
+
+				var createRes = await fetch('/api/try/create', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					credentials: 'include',
+					body: JSON.stringify({ prompt: prompt.trim() })
+				});
+				if (!createRes.ok) {
+					await ensureMinLoadingTime();
+					logElapsed('Failed (create)');
+					showError(createRes.status === 400 ? 'Please enable cookies and refresh.' : 'Could not start generation.');
+					return;
+				}
+				var data = await createRes.json();
+				if (data.status === 'completed' && data.url) {
+					await ensureMinLoadingTime();
+					logElapsed('Completed');
+					showImage(data.url);
+					return;
+				}
+				var id = data.id;
+				if (!id) {
+					setGenerating();
+					return;
+				}
+
+				var pollMs = 2000;
+				var maxPolls = 120;
+				var pollCount = 0;
+				while (pollCount < maxPolls) {
+					await new Promise(function (r) { setTimeout(r, pollMs); });
+					pollCount++;
+					var listRes = await fetch('/api/try/list', { credentials: 'include' });
+					if (!listRes.ok) break;
+					var list = await listRes.json();
+					var item = Array.isArray(list) ? list.find(function (i) { return i.id === id; }) : null;
+					if (!item) continue;
+					if (item.status === 'completed' && item.url) {
+						await ensureMinLoadingTime();
+						logElapsed('Completed');
+						showImage(item.url);
+						return;
+					}
+					if (item.status === 'failed') {
+						await ensureMinLoadingTime();
+						logElapsed('Failed');
+						showError((item.meta && item.meta.error) || 'Generation failed.');
+						return;
+					}
+				}
+				await ensureMinLoadingTime();
+				logElapsed('Timeout');
+				showError('This is taking longer than usual. Refresh to check again.');
+			}
+			run();
+		})();
+	</script>
+	<script type="module">
+		await customElements.whenDefined('app-navigation');
+		await new Promise(function (r) {
+			requestAnimationFrame(function () {
+				requestAnimationFrame(r);
+			});
+		});
+		var header = document.querySelector('header');
+		if (header) {
+			function handleScroll() {
+				var scrollY = window.scrollY || window.pageYOffset;
+				if (scrollY > 50) {
+					header.classList.add('scrolled');
+				} else {
+					header.classList.remove('scrolled');
+				}
+			}
+			handleScroll();
+			window.addEventListener('scroll', handleScroll, { passive: true });
+		}
+	</script>
+</body>
+
+</html>

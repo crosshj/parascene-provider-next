@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>parascene - create</title>
+	<link rel="stylesheet" href="/pages/creations.css" />
+</head>
+
+<body class="create-page">
+	<!--APP_HEADER-->
+
+	<app-modal-profile></app-modal-profile>
+	<app-modal-credits></app-modal-credits>
+	<app-modal-notifications></app-modal-notifications>
+	<app-modal-server></app-modal-server>
+	<app-navigation-mobile></app-navigation-mobile>
+
+	<main>
+		<section>
+			<app-route-create></app-route-create>
+		</section>
+		<footer class="create-page-footer">
+			<a href="/create" class="create-switch-to-basic" id="create-switch-to-basic">basic mode</a>
+		</footer>
+	</main>
+	<script>
+		(function () {
+			var link = document.getElementById('create-switch-to-basic');
+			if (!link) return;
+			link.addEventListener('click', function (e) {
+				e.preventDefault();
+				document.cookie = 'create_editor=simple; path=/; max-age=31536000';
+				window.location.href = '/create';
+			});
+		})();
+	</script>
+</body>
+
+</html>

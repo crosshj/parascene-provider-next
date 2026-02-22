@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Embeddings test – Parascene</title>
+	<style>
+		body {
+			font: 1rem/1.4 system-ui, sans-serif;
+			max-width: 900px;
+			margin: 0 auto;
+			padding: 1rem;
+			background: #f5f5f5;
+			color: #111;
+		}
+
+		header {
+			margin-bottom: 1.5rem;
+		}
+
+		header a {
+			color: inherit;
+			text-decoration: none;
+		}
+
+		h1 {
+			font-size: 1.2rem;
+			margin: 0.5rem 0 0;
+		}
+
+		section {
+			margin-bottom: 1.5rem;
+		}
+
+		h2 {
+			font-size: 1rem;
+			margin: 0 0 0.5rem;
+		}
+
+		label {
+			display: block;
+			margin-bottom: 0.25rem;
+			font-size: 0.875rem;
+		}
+
+		.row {
+			display: flex;
+			gap: 0.5rem;
+			align-items: center;
+		}
+
+		input[type="number"],
+		input[type="text"] {
+			padding: 0.4rem 0.6rem;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			font-size: 1rem;
+			max-width: 14rem;
+		}
+
+		button {
+			padding: 0.4rem 0.75rem;
+			border-radius: 4px;
+			border: 1px solid #888;
+			background: #fff;
+			cursor: pointer;
+		}
+
+		#emb-main-section {
+			min-height: 172px;
+		}
+
+		#emb-results-section>.row {
+			margin-bottom: 0.75rem;
+		}
+
+		.load-more-row {
+			margin-top: 0.75rem;
+		}
+
+		.main {
+			display: flex;
+			gap: 1rem;
+			padding: 1rem;
+			background: #e8e8e8;
+			border-radius: 8px;
+			max-width: 500px;
+		}
+
+		.main img {
+			width: 140px;
+			height: 140px;
+			object-fit: cover;
+			border-radius: 6px;
+		}
+
+		.main .meta .title {
+			font-weight: 600;
+		}
+
+		.main .meta .summary,
+		.main .meta .description,
+		.main .meta .prompt {
+			font-size: 0.875rem;
+			margin-top: 0.25rem;
+			opacity: 0.9;
+		}
+
+		.main .meta .meta-label {
+			font-size: 0.7rem;
+			text-transform: uppercase;
+			letter-spacing: 0.03em;
+			opacity: 0.7;
+			margin-top: 0.5rem;
+			margin-bottom: 0.15rem;
+		}
+
+		.grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+			gap: 0.75rem;
+		}
+
+		#emb-search-results {
+			min-height: 418px;
+		}
+
+		.card {
+			display: block;
+			background: #e8e8e8;
+			border-radius: 8px;
+			overflow: hidden;
+			text-decoration: none;
+			color: inherit;
+		}
+
+		.card:hover {
+			background: #ddd;
+		}
+
+		.card img {
+			width: 100%;
+			aspect-ratio: 1;
+			object-fit: cover;
+			display: block;
+		}
+
+		.card .cap {
+			padding: 0.4rem;
+			font-size: 0.7rem;
+		}
+
+		.card .cap .title {
+			font-weight: 600;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+		}
+
+		.card .cap .dist {
+			margin-top: 0.2rem;
+			opacity: 0.8;
+		}
+
+		.status {
+			font-size: 0.875rem;
+			margin-top: 0.5rem;
+			opacity: 0.9;
+		}
+
+		.err {
+			color: #c00;
+			font-size: 0.875rem;
+			margin-top: 0.5rem;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1><a href="/test/">Embeddings test</a></h1>
+		<p style="font-size:0.875rem; margin:0.25rem 0 0; opacity:0.85;">Search by text or add <code>?id=123</code> to the URL to load by creation ID.</p>
+	</header>
+	<main>
+		<section id="emb-main-section" hidden>
+			<div class="main" id="emb-main-card"></div>
+		</section>
+		<section id="emb-results-section">
+			<div class="row">
+				<input id="emb-search-q" type="text" placeholder="e.g. star wars t-shirt" />
+				<button type="button" id="emb-search-btn">Search</button>
+				<button type="button" id="emb-clear-search-btn" hidden>Clear search</button>
+			</div>
+			<div id="emb-neighbours-wrap" hidden>
+				<div class="grid" id="emb-neighbours"></div>
+				<div class="row load-more-row">
+					<button type="button" id="emb-load-more-neighbours" hidden>Load more</button>
+				</div>
+			</div>
+			<div id="emb-search-results-wrap" hidden>
+				<div class="grid" id="emb-search-results"></div>
+				<div class="row load-more-row">
+					<button type="button" id="emb-load-more-search" hidden>Load more</button>
+				</div>
+			</div>
+		</section>
+	</main>
+	<script>
+		(function () {
+			var mainSection = document.getElementById("emb-main-section");
+			var mainCard = document.getElementById("emb-main-card");
+			var resultsSection = document.getElementById("emb-results-section");
+			var neighboursWrap = document.getElementById("emb-neighbours-wrap");
+			var neighboursEl = document.getElementById("emb-neighbours");
+			var searchResultsWrap = document.getElementById("emb-search-results-wrap");
+			var searchResults = document.getElementById("emb-search-results");
+			var searchQ = document.getElementById("emb-search-q");
+			var searchBtn = document.getElementById("emb-search-btn");
+			var clearSearchBtn = document.getElementById("emb-clear-search-btn");
+			var loadMoreNeighboursBtn = document.getElementById("emb-load-more-neighbours");
+			var loadMoreSearchBtn = document.getElementById("emb-load-more-search");
+
+			var PAGE_SIZE = 28;
+			var currentCreationId = null;
+			var lastSearchQ = "";
+
+			function base() { return window.location.origin; }
+			function imgUrl(item) {
+				var u = (item && (item.thumbnail_url || item.image_url)) || "";
+				return u && u.indexOf("http") !== 0 ? base() + u : u;
+			}
+			function escHtml(s) {
+				var d = document.createElement("div");
+				d.textContent = s;
+				return d.innerHTML;
+			}
+			function escAttr(s) {
+				return String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#39;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+			}
+
+			function renderMain(main, promptText) {
+				if (!main) { mainSection.hidden = true; resultsSection.hidden = false; return; }
+				mainSection.hidden = false;
+				resultsSection.hidden = false;
+				var src = imgUrl(main);
+				var titleHtml = "<div class=\"title\">" + escHtml(main.title || "Untitled") + "</div>";
+				var desc = (main.summary != null && main.summary !== "") ? main.summary : "";
+				var descHtml = desc ? "<div class=\"meta-label\">Description</div><div class=\"description\">" + escHtml(desc) + "</div>" : "";
+				var promptHtml = (promptText && promptText.trim()) ? "<div class=\"meta-label\">Prompt</div><div class=\"prompt\">" + escHtml(promptText) + "</div>" : "";
+				mainCard.innerHTML = (src ? "<img src=\"" + escAttr(src) + "\" alt=\"\" />" : "") +
+					"<div class=\"meta\">" + titleHtml + descHtml + promptHtml + "</div>";
+			}
+
+			function itemToCardHtml(item, withDist) {
+				var page = "/test/embed.html";
+				var src = imgUrl(item);
+				var id = item.created_image_id != null ? item.created_image_id : item.id;
+				var dist = withDist && item.distance != null ? "distance " + Number(item.distance).toFixed(4) : "";
+				return "<a class=\"card\" href=\"" + escAttr(page + "?id=" + encodeURIComponent(String(id))) + "\">" +
+					(src ? "<img src=\"" + escAttr(src) + "\" alt=\"\" loading=\"lazy\" />" : "") +
+					"<div class=\"cap\"><span class=\"title\">" + escHtml(item.title || "Untitled") + "</span>" +
+					(dist ? "<div class=\"dist\">" + escHtml(dist) + "</div>" : "") + "</div></a>";
+			}
+
+			function renderItems(items, container, withDist) {
+				container.innerHTML = items.map(function (item) { return itemToCardHtml(item, withDist); }).join("");
+			}
+
+			function appendItems(items, container, withDist) {
+				var html = items.map(function (item) { return itemToCardHtml(item, withDist); }).join("");
+				container.insertAdjacentHTML("beforeend", html);
+			}
+
+			function loadById(id) {
+				var num = parseInt(String(id), 10);
+				if (!isFinite(num) || num < 1) return;
+				currentCreationId = num;
+				searchResultsWrap.hidden = true;
+				searchResults.innerHTML = "";
+				loadMoreSearchBtn.hidden = true;
+				clearSearchBtn.hidden = true;
+				neighboursEl.innerHTML = "";
+				loadMoreNeighboursBtn.hidden = true;
+				neighboursWrap.hidden = true;
+				mainCard.innerHTML = "<span class=\"status\">Loading…</span>";
+				mainSection.hidden = false;
+				resultsSection.hidden = false;
+				fetch(base() + "/api/creations/" + num + "/semantic-related?limit=" + PAGE_SIZE + "&offset=0")
+					.then(function (r) {
+						if (!r.ok) throw new Error(r.status === 404 ? "No embedding for this creation." : r.statusText);
+						return r.json();
+					})
+					.then(function (data) {
+						renderMain(data.main);
+						if (data.items && data.items.length > 0) {
+							neighboursWrap.hidden = false;
+							renderItems(data.items, neighboursEl, true);
+							loadMoreNeighboursBtn.hidden = !data.has_more;
+						}
+						// Optional: if user is logged in, fetch creation detail for prompt (no backend change)
+						fetch(base() + "/api/create/images/" + num, { credentials: "include" })
+							.then(function (r) { return r.ok ? r.json() : null; })
+							.catch(function () { return null; })
+							.then(function (detail) {
+								if (!detail || currentCreationId !== num) return;
+								var prompt = (detail.meta && detail.meta.args && typeof detail.meta.args.prompt === "string") ? detail.meta.args.prompt : "";
+								if (prompt) renderMain(data.main, prompt);
+							});
+					})
+					.catch(function (err) {
+						mainCard.innerHTML = "<span class=\"err\">" + escHtml(err.message) + "</span>";
+					});
+			}
+
+			function loadMoreNeighbours() {
+				if (currentCreationId == null) return;
+				var offset = neighboursEl.querySelectorAll(".card").length;
+				loadMoreNeighboursBtn.disabled = true;
+				fetch(base() + "/api/creations/" + currentCreationId + "/semantic-related?limit=" + PAGE_SIZE + "&offset=" + offset)
+					.then(function (r) { return r.ok ? r.json() : Promise.reject(new Error(r.statusText)); })
+					.then(function (data) {
+						if (data.items && data.items.length > 0) appendItems(data.items, neighboursEl, true);
+						loadMoreNeighboursBtn.hidden = !data.has_more;
+					})
+					.catch(function () { loadMoreNeighboursBtn.hidden = true; })
+					.finally(function () { loadMoreNeighboursBtn.disabled = false; });
+			}
+
+			function doSearch() {
+				var q = (searchQ.value || "").trim();
+				if (!q) return;
+				lastSearchQ = q;
+				searchResultsWrap.hidden = false;
+				neighboursWrap.hidden = true;
+				clearSearchBtn.hidden = false;
+				loadMoreSearchBtn.hidden = true;
+				searchResults.innerHTML = "<span class=\"status\">Searching…</span>";
+				fetch(base() + "/api/embeddings/search?q=" + encodeURIComponent(q) + "&limit=" + PAGE_SIZE + "&offset=0")
+					.then(function (r) {
+						if (!r.ok) throw new Error(r.statusText || "Search failed");
+						return r.json();
+					})
+					.then(function (data) {
+						if (!data.items || data.items.length === 0) {
+							searchResults.innerHTML = "<span class=\"status\">No results.</span>";
+							return;
+						}
+						renderItems(data.items, searchResults, true);
+						loadMoreSearchBtn.hidden = !data.has_more;
+					})
+					.catch(function (err) {
+						searchResults.innerHTML = "<span class=\"err\">" + escHtml(err.message) + "</span>";
+					});
+			}
+
+			function loadMoreSearch() {
+				if (!lastSearchQ) return;
+				var offset = searchResults.querySelectorAll(".card").length;
+				loadMoreSearchBtn.disabled = true;
+				fetch(base() + "/api/embeddings/search?q=" + encodeURIComponent(lastSearchQ) + "&limit=" + PAGE_SIZE + "&offset=" + offset)
+					.then(function (r) { return r.ok ? r.json() : Promise.reject(new Error(r.statusText)); })
+					.then(function (data) {
+						if (data.items && data.items.length > 0) appendItems(data.items, searchResults, true);
+						loadMoreSearchBtn.hidden = !data.has_more;
+					})
+					.catch(function () { loadMoreSearchBtn.hidden = true; })
+					.finally(function () { loadMoreSearchBtn.disabled = false; });
+			}
+
+			function clearSearch() {
+				searchResultsWrap.hidden = true;
+				searchResults.innerHTML = "";
+				clearSearchBtn.hidden = true;
+				neighboursWrap.hidden = false;
+			}
+
+			searchBtn.addEventListener("click", doSearch);
+			searchQ.addEventListener("keydown", function (e) { if (e.key === "Enter") doSearch(); });
+			clearSearchBtn.addEventListener("click", clearSearch);
+			loadMoreNeighboursBtn.addEventListener("click", loadMoreNeighbours);
+			loadMoreSearchBtn.addEventListener("click", loadMoreSearch);
+
+			var params = new URLSearchParams(window.location.search);
+			var idParam = params.get("id");
+			if (idParam) loadById(idParam);
+		})();
+	</script>
+</body>
+
+</html>

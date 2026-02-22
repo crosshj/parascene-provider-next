@@ -1,0 +1,586 @@
+/* Help Pages Styles */
+
+.help-page {
+	min-height: 100vh;
+	background: var(--bg);
+}
+
+/* On help pages, remove extra bottom padding from main
+   (including mobile bottom-nav padding) while keeping top/side padding. */
+.help-page main {
+	padding-bottom: 0;
+}
+
+@media (max-width: 768px) {
+	body.help-page main {
+		padding-bottom: 0;
+	}
+}
+
+/* Use global main for max-width and padding; container is just the help grid */
+.help-container {
+	display: grid;
+	grid-template-columns: 240px 1fr;
+	gap: 32px;
+}
+
+@media (max-width: 768px) {
+	.help-container {
+		grid-template-columns: 1fr;
+		gap: 0;
+	}
+}
+
+/* Sidebar: stick below header (72px) with gap (16px) = 88px from viewport top */
+.help-sidebar {
+	position: sticky;
+	top: 88px;
+	height: fit-content;
+	max-height: calc(100vh - 88px);
+	overflow-y: auto;
+	padding-top: 8px;
+	padding-bottom: 72px;
+}
+
+@media (max-width: 768px) {
+	.help-sidebar {
+		display: none;
+	}
+}
+
+/* Single search bar (above article, visible on all viewports) */
+.help-search-bar {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 20px;
+}
+
+/* Icon-only button: square, matches search input height */
+.help-mobile-home {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 40px;
+	height: 40px;
+	min-width: 40px;
+	min-height: 40px;
+	padding: 0;
+	border-radius: 6px;
+	color: var(--text-muted);
+	text-decoration: none;
+	transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+
+.help-mobile-home.btn-secondary {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	box-shadow: var(--shadow);
+}
+
+.help-mobile-home:hover {
+	color: var(--accent);
+	background: rgba(124, 58, 237, 0.08);
+	border-color: var(--accent);
+}
+
+.help-mobile-home .help-mobile-home-icon {
+	width: 20px;
+	height: 20px;
+	flex-shrink: 0;
+}
+
+.help-home-label {
+	display: none;
+}
+
+@media (min-width: 769px) {
+	.help-mobile-home {
+		width: auto;
+		min-width: 0;
+		padding: 8px 12px;
+	}
+	.help-home-label {
+		display: inline;
+		margin-left: 6px;
+		font-size: 0.95rem;
+		font-weight: 500;
+	}
+}
+
+.help-search-bar input {
+	flex: 1;
+	min-width: 0;
+	padding: 10px 14px;
+	border: 1px solid var(--border);
+	border-radius: 6px;
+	background: var(--input-bg);
+	color: var(--text);
+	font-family: var(--font-family);
+	font-size: 0.95rem;
+	transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.help-search-bar input:focus {
+	outline: none;
+	border-color: var(--accent);
+	box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.help-nav {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.help-nav-section {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.help-nav-section-title {
+	padding: 8px 14px 4px;
+	font-size: 0.75rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: var(--text-muted);
+}
+
+.help-nav-item {
+	padding: 10px 14px;
+	padding-left: 20px;
+	border-radius: 6px;
+	color: var(--text-muted);
+	text-decoration: none;
+	font-size: 0.95rem;
+	transition: background-color 0.2s, color 0.2s;
+}
+
+.help-nav-item:hover {
+	background: var(--surface-strong);
+	color: var(--text);
+}
+
+.help-nav-item.active {
+	background: var(--surface-strong);
+	color: var(--accent);
+	font-weight: 600;
+}
+
+.help-nav-item.help-nav-item-match {
+	color: var(--accent);
+	background: rgba(124, 58, 237, 0.1);
+	font-weight: 600;
+}
+
+.help-nav-item.help-nav-item-match:hover {
+	background: rgba(124, 58, 237, 0.15);
+	color: var(--accent);
+}
+
+/* Article Content */
+.help-article-wrapper {
+	padding-bottom: 72px;
+}
+
+.help-article {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: 10px;
+	padding: 40px;
+	min-height: 400px;
+}
+
+@media (max-width: 768px) {
+	.help-article {
+		padding: 24px;
+	}
+}
+
+.help-content h1 {
+	margin: 0 0 12px;
+	font-size: 2rem;
+	font-weight: 700;
+	color: var(--text);
+}
+
+@media (max-width: 768px) {
+	.help-content h1 {
+		font-size: 1.5rem;
+	}
+}
+
+.help-description {
+	margin: 0 0 32px;
+	font-size: 1.1rem;
+	color: var(--text-muted);
+	line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+	.help-description {
+		font-size: 1rem;
+		margin-bottom: 24px;
+	}
+}
+
+.help-body {
+	color: var(--text);
+	line-height: 1.7;
+}
+
+.help-body h2 {
+	margin: 32px 0 16px;
+	font-size: 1.5rem;
+	font-weight: 600;
+	color: var(--text);
+	border-bottom: 1px solid var(--border);
+	padding-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+	.help-body h2 {
+		font-size: 1.25rem;
+		margin: 24px 0 12px;
+	}
+}
+
+.help-body h3 {
+	margin: 24px 0 12px;
+	font-size: 1.25rem;
+	font-weight: 600;
+	color: var(--text);
+}
+
+@media (max-width: 768px) {
+	.help-body h3 {
+		font-size: 1.1rem;
+		margin: 20px 0 10px;
+	}
+}
+
+.help-body h4 {
+	margin: 20px 0 10px;
+	font-size: 1.1rem;
+	font-weight: 600;
+	color: var(--text);
+}
+
+.help-body p {
+	margin: 0 0 16px;
+	color: var(--text);
+}
+
+.help-body ul,
+.help-body ol {
+	margin: 0 0 16px;
+	padding-left: 24px;
+	color: var(--text);
+}
+
+.help-body li {
+	margin: 8px 0;
+}
+
+.help-body a {
+	color: var(--accent);
+	text-decoration: none;
+	border-bottom: 1px solid transparent;
+	transition: border-color 0.2s;
+}
+
+.help-body a:hover {
+	border-bottom-color: var(--accent);
+}
+
+.help-body code {
+	background: var(--surface-strong);
+	padding: 2px 6px;
+	border-radius: 4px;
+	font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+	font-size: 0.9em;
+	color: var(--accent);
+}
+
+.help-body pre {
+	background: var(--surface-strong);
+	border: 1px solid var(--border);
+	border-radius: 6px;
+	padding: 16px;
+	overflow-x: auto;
+	margin: 16px 0;
+}
+
+.help-body pre code {
+	background: none;
+	padding: 0;
+	color: var(--text);
+}
+
+.help-body blockquote {
+	border-left: 3px solid var(--accent);
+	padding-left: 16px;
+	margin: 16px 0;
+	color: var(--text-muted);
+	font-style: italic;
+}
+
+.help-body strong {
+	font-weight: 600;
+	color: var(--text);
+}
+
+.help-body em {
+	font-style: italic;
+}
+
+/* Index Page */
+.help-index h2 {
+	margin: 0 0 32px;
+	font-size: 1.75rem;
+	font-weight: 600;
+	color: var(--text);
+}
+
+.help-index-section {
+	margin-bottom: 40px;
+}
+
+.help-index-section:last-child {
+	margin-bottom: 0;
+}
+
+.help-index-section-title {
+	margin: 0 0 16px;
+	font-size: 1.1rem;
+	font-weight: 600;
+	color: var(--text);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.help-index-list {
+	display: grid;
+	gap: 12px;
+}
+
+.help-index-item {
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.help-index-item:hover {
+	border-color: var(--accent);
+	box-shadow: 0 2px 8px rgba(124, 58, 237, 0.1);
+}
+
+.help-index-link {
+	display: block;
+	padding: 16px 20px;
+	text-decoration: none;
+	color: inherit;
+}
+
+.help-index-link h4 {
+	margin: 0;
+	font-size: 1.1rem;
+	font-weight: 600;
+	color: var(--text);
+}
+
+.help-index-link:hover h4 {
+	color: var(--accent);
+}
+
+/* Search Results Highlighting */
+.help-body mark {
+	background: rgba(124, 58, 237, 0.2);
+	padding: 2px 4px;
+	border-radius: 3px;
+}
+
+/* Hidden content (for search filtering) */
+.help-content.hidden,
+.help-nav-item.hidden {
+	display: none;
+}
+
+/* Search Results */
+.help-search-results {
+	margin-top: 0;
+}
+
+.help-search-results-header {
+	margin-bottom: 24px;
+}
+
+.help-search-results-header h2 {
+	margin: 0 0 8px;
+	font-size: 1.5rem;
+	font-weight: 600;
+	color: var(--text);
+}
+
+.help-search-results-count {
+	margin: 0;
+	font-size: 0.95rem;
+	color: var(--text-muted);
+}
+
+.help-search-results-list {
+	display: flex;
+	flex-direction: column;
+}
+
+.help-search-divider {
+	height: 1px;
+	background: var(--border);
+	margin: 16px 0;
+}
+
+.help-search-result {
+	display: block;
+	padding: 16px 0;
+	text-decoration: none;
+	color: inherit;
+	cursor: pointer;
+	transition: background-color 0.2s;
+	border-radius: 6px;
+}
+
+.help-search-result:hover {
+	background: var(--surface-strong);
+}
+
+.help-search-result-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.help-search-result-title {
+	font-size: 1.1rem;
+	font-weight: 600;
+	color: var(--accent);
+	transition: color 0.2s;
+}
+
+.help-search-result:hover .help-search-result-title {
+	color: var(--focus);
+}
+
+.help-search-result-meta {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.help-search-result-section {
+	font-size: 0.75rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: var(--text-muted);
+	padding: 4px 8px;
+	background: var(--surface-strong);
+	border-radius: 4px;
+}
+
+.help-search-result-count {
+	font-size: 0.875rem;
+	color: var(--text-muted);
+}
+
+.help-search-error {
+	text-align: center;
+	padding: 40px 20px;
+	color: var(--text-muted);
+}
+
+.help-search-error p {
+	margin: 0;
+	font-size: 1rem;
+}
+
+/* Shared empty / not-found state (article 404 and no search results) */
+.help-not-found {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	padding: 80px 40px;
+	min-height: 500px;
+}
+
+.help-not-found-icon {
+	margin-bottom: 32px;
+	opacity: 0.5;
+	color: var(--text-muted);
+}
+
+.help-not-found-icon svg {
+	width: 80px;
+	height: 80px;
+}
+
+.help-not-found h1 {
+	margin: 0 0 16px;
+	font-size: 2rem;
+	font-weight: 700;
+	color: var(--text);
+}
+
+.help-not-found-message {
+	margin: 0;
+	font-size: 1.1rem;
+	color: var(--text-muted);
+	max-width: 600px;
+	line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+	.help-not-found {
+		padding: 60px 24px;
+		min-height: 400px;
+	}
+	
+	.help-not-found-icon {
+		margin-bottom: 24px;
+	}
+	
+	.help-not-found-icon svg {
+		width: 64px;
+		height: 64px;
+	}
+	
+	.help-not-found h1 {
+		font-size: 1.75rem;
+	}
+	
+	.help-not-found-message {
+		font-size: 1rem;
+	}
+}
+
+/* Warning alert styling */
+.alert-warning {
+	background: #fff7ed;
+	border-color: #fed7aa;
+	color: #9a3412;
+}
+
+@media (prefers-color-scheme: dark) {
+	.alert-warning {
+		background: #431407;
+		border-color: #7c2d12;
+		color: #fdba74;
+	}
+}

@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>parascene - pricing</title>
+	<link rel="stylesheet" href="/pages/creations.css" />
+	<link rel="stylesheet" href="/pages/pricing.css" />
+</head>
+
+<body class="pricing-page">
+	<!--APP_HEADER-->
+
+	<app-modal-profile></app-modal-profile>
+	<app-modal-credits></app-modal-credits>
+	<app-modal-notifications></app-modal-notifications>
+
+	<!--APP_MOBILE_BOTTOM_NAV-->
+
+	<main data-pricing-main>
+		<div class="route-header" data-pricing-header>
+			<h3 data-pricing-header-title>Pricing</h3>
+			<p data-pricing-header-subtitle>Start free, or unlock Founder.</p>
+		</div>
+
+		<div class="pricing-success-state-content" data-pricing-success-state-content hidden>
+			<div class="pricing-success-message" data-pricing-success-message role="status" aria-live="polite">
+				<p class="pricing-success-message-title">Payment successful</p>
+				<p>Thank you for subscribing. Your Founder plan is being activated — you’ll have 700 credits per month,
+					priority support, and Founder flair on your profile.</p>
+				<p>Refresh in a moment to see your plan update, or continue exploring.</p>
+				<p>You can switch back to Free anytime from the pricing page.</p>
+				<div class="pricing-success-actions">
+					<a href="/pricing" class="pricing-success-btn pricing-success-btn-primary">Refresh</a>
+				</div>
+			</div>
+		</div>
+		<script>
+			(function () {
+				var q = window.location.search;
+				var hasSuccess = q.indexOf('success=1') !== -1 || q.indexOf('session_id=') !== -1;
+				var switchedFree = q.indexOf('switched=free') !== -1;
+				if (!hasSuccess && !switchedFree) return;
+				var main = document.querySelector('[data-pricing-main]');
+				var title = document.querySelector('[data-pricing-header-title]');
+				var subtitle = document.querySelector('[data-pricing-header-subtitle]');
+				var content = document.querySelector('[data-pricing-success-state-content]');
+				var messageEl = document.querySelector('[data-pricing-success-message]');
+				if (main) {
+					main.classList.add('pricing-success-state');
+					main.classList.add('pricing-ready');
+				}
+				if (title) title.textContent = 'Pricing';
+				if (subtitle) subtitle.textContent = switchedFree ? 'You\'re now on the Free plan.' : 'Thank you. Your Founder plan is being activated.';
+				if (messageEl && switchedFree) {
+					messageEl.innerHTML = '<p class="pricing-success-message-title">Plan updated</p><p>You\'re now on the Free plan. You can resubscribe to Founder anytime.</p><div class="pricing-success-actions"><a href="/pricing" class="pricing-success-btn pricing-success-btn-primary">Continue</a></div>';
+				}
+				if (content) content.hidden = false;
+			})();
+		</script>
+
+		<div class="pricing-loading" data-pricing-loading aria-live="polite">
+			<div class="route-loading">
+				<div class="route-loading-spinner" aria-label="Loading" role="status"></div>
+			</div>
+		</div>
+
+		<div class="pricing-content" data-pricing-content>
+			<div class="pricing-grid">
+				<div class="pricing-card" data-pricing-tier="free">
+					<h3>Free</h3>
+					<div class="pricing-avatar-preview pricing-avatar-preview--plain" aria-hidden="true">
+						<div class="pricing-avatar-plain" data-inject="user-avatar-icon"></div>
+					</div>
+					<p class="pricing-price">$0 <span>always</span></p>
+					<ul>
+						<li>Create with AI and generative tools</li>
+						<li>Claim free credits daily</li>
+						<li>Share creations and build a profile</li>
+						<li>Comment, follow, and explore</li>
+					</ul>
+					<div data-pricing-cta-free>
+						<a href="/auth?returnUrl=/pricing#signup" class="btn-secondary" data-pricing-cta-free-guest>Get
+							started</a>
+						<button type="button" class="btn-secondary" data-pricing-cta-free-switch>Switch to Free</button>
+					</div>
+					<span class="pricing-current-badge" data-pricing-badge-free style="display: none;">Current
+						plan</span>
+				</div>
+
+				<div class="pricing-card" data-pricing-tier="founder">
+					<h3>Founder</h3>
+					<div class="pricing-avatar-preview pricing-founder-flair-preview" aria-hidden="true">
+						<div class="founder-flair-mock">
+							<div class="founder-flair-avatar">
+								<div class="founder-flair-avatar-inner" data-inject="user-avatar-icon"></div>
+							</div>
+							<div class="founder-flair-label">Founder</div>
+						</div>
+					</div>
+					<p class="pricing-price">$12 <span>/ month</span></p>
+					<ul>
+						<li class="pricing-feature-founder"><strong>700 credits per month</strong></li>
+						<li class="pricing-feature-founder"><strong>Priority support</strong></li>
+						<li class="pricing-feature-founder"><strong>Early feature consideration</strong></li>
+						<li class="pricing-feature-founder"><strong>Founder flair</strong> — lifetime</li>
+					</ul>
+					<div data-pricing-cta-founder>
+						<a href="/auth?returnUrl=/pricing#signup" class="btn-primary" data-pricing-cta-founder>Unlock
+							Founder</a>
+					</div>
+					<span class="pricing-current-badge" data-pricing-badge-founder style="display: none;">Current
+						plan</span>
+				</div>
+			</div>
+
+			<div class="pricing-team-message">
+				<h4 class="pricing-team-message-title">A special note for early users</h4>
+				<p>Parascene is early and evolving. Founder members help define what it becomes.</p>
+				<p>As a Founder, you receive priority support and early feature consideration — your input directly
+					shapes
+					the roadmap.</p>
+			</div>
+		</div>
+	</main>
+
+	<script type="module">
+		import { userAvatarIcon } from '/icons/svg-strings.js';
+
+		const main = document.querySelector('[data-pricing-main]');
+		const loadingEl = document.querySelector('[data-pricing-loading]');
+		const headerTitle = document.querySelector('[data-pricing-header-title]');
+		const headerSubtitle = document.querySelector('[data-pricing-header-subtitle]');
+		const successStateContent = document.querySelector('[data-pricing-success-state-content]');
+		const successMessage = document.querySelector('[data-pricing-success-message]');
+		const badgeFree = document.querySelector('[data-pricing-badge-free]');
+		const badgeFounder = document.querySelector('[data-pricing-badge-founder]');
+		const ctaFreeGuest = document.querySelector('[data-pricing-cta-free-guest]');
+		const ctaFreeSwitch = document.querySelector('[data-pricing-cta-free-switch]');
+		const ctaFounder = document.querySelector('a[data-pricing-cta-founder]');
+		const avatarSlots = document.querySelectorAll('[data-inject="user-avatar-icon"]');
+
+		let spinnerShowTimeout = setTimeout(function () {
+			spinnerShowTimeout = null;
+			if (main && !main.classList.contains('pricing-ready') && !main.classList.contains('pricing-success-state') && loadingEl) {
+				loadingEl.classList.add('pricing-loading-delayed-show');
+			}
+		}, 2000);
+
+		function clearSpinnerTimeout() {
+			if (spinnerShowTimeout != null) {
+				clearTimeout(spinnerShowTimeout);
+				spinnerShowTimeout = null;
+			}
+		}
+
+		function showSuccessState(variant) {
+			clearSpinnerTimeout();
+			if (main) main.classList.add('pricing-success-state');
+			if (main) main.classList.add('pricing-ready');
+			if (headerTitle) headerTitle.textContent = 'Pricing';
+			if (headerSubtitle) {
+				headerSubtitle.textContent = variant === 'deactivation'
+					? 'You\'re now on the Free plan.'
+					: 'Thank you. Your Founder plan is being activated.';
+			}
+			if (successMessage) {
+				successMessage.innerHTML = variant === 'deactivation'
+					? '<p class="pricing-success-message-title">Plan updated</p><p>You\'re now on the Free plan. You can resubscribe to Founder anytime.</p><div class="pricing-success-actions"><a href="/pricing" class="pricing-success-btn pricing-success-btn-primary">Continue</a></div>'
+					: '<p class="pricing-success-message-title">Payment successful</p><p>Thank you for subscribing. Your Founder plan is being activated — you\'ll have 700 credits per month, priority support, and Founder flair on your profile.</p><p>Refresh in a moment to see your plan update, or continue exploring.</p><p>You can switch back to Free anytime from the pricing page.</p><div class="pricing-success-actions"><a href="/pricing" class="pricing-success-btn pricing-success-btn-primary">Refresh</a></div>';
+			}
+			if (successStateContent) successStateContent.hidden = false;
+		}
+
+		function showContent() {
+			clearSpinnerTimeout();
+			if (main) main.classList.add('pricing-ready');
+		}
+
+		function injectPlaceholderIcon() {
+			const iconHtml = userAvatarIcon();
+			avatarSlots.forEach(function (el) {
+				el.innerHTML = iconHtml;
+			});
+		}
+
+		function setAvatarSlots(avatarUrl) {
+			if (!avatarUrl) return;
+			avatarSlots.forEach(function (el) {
+				el.innerHTML = '';
+				const img = document.createElement('img');
+				img.src = avatarUrl;
+				img.alt = '';
+				img.className = 'pricing-avatar-img';
+				el.appendChild(img);
+			});
+		}
+
+		if (main && (main.classList.contains('pricing-ready') || main.classList.contains('pricing-success-state'))) {
+			clearSpinnerTimeout();
+		}
+
+		fetch('/api/profile', { credentials: 'include', cache: 'no-store' })
+			.then(function (res) {
+				if (!res.ok) throw new Error('Not authenticated');
+				return res.json();
+			})
+			.then(function (data) {
+				const avatarUrl = data && data.profile && typeof data.profile.avatar_url === 'string'
+					? data.profile.avatar_url.trim() : '';
+				if (avatarUrl) {
+					setAvatarSlots(avatarUrl);
+				} else {
+					injectPlaceholderIcon();
+				}
+				const plan = (data && data.plan) ? data.plan : 'free';
+				const pendingPlanActivation = Boolean(data && data.pendingPlanActivation);
+
+				// If user just returned from Stripe or has pending activation, show success-only view (hide grid/CTAs)
+				const urlParams = new URLSearchParams(window.location.search);
+				const successParam = urlParams.get('success') === '1';
+				const sessionIdParam = urlParams.get('session_id') || '';
+				const switchedFreeParam = urlParams.get('switched') === 'free';
+				if (switchedFreeParam && plan === 'free') {
+					showSuccessState('deactivation');
+					history.replaceState(null, '', window.location.pathname);
+				} else if (successParam && sessionIdParam) {
+					showSuccessState('activation');
+					history.replaceState(null, '', window.location.pathname);
+					fetch('/api/subscription/checkout-return', {
+						method: 'POST',
+						credentials: 'include',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({ sessionId: sessionIdParam })
+					}).catch(function () { });
+				} else if (pendingPlanActivation && plan === 'free') {
+					showSuccessState('activation');
+				} else if (successParam) {
+					showSuccessState(plan === 'free' ? 'deactivation' : 'activation');
+					history.replaceState(null, '', window.location.pathname);
+				}
+
+				if (plan === 'free' && badgeFree) badgeFree.style.display = 'inline-block';
+				if (plan === 'founder' && badgeFounder) badgeFounder.style.display = 'inline-block';
+				if (ctaFreeGuest) ctaFreeGuest.style.display = 'none';
+				if (plan === 'founder' && ctaFreeSwitch) ctaFreeSwitch.classList.add('pricing-cta-visible');
+				if (ctaFounder) {
+					if (plan === 'founder') {
+						ctaFounder.style.display = 'none';
+					} else if (plan === 'free') {
+						ctaFounder.href = '#';
+						ctaFounder.addEventListener('click', function (e) {
+							e.preventDefault();
+							const link = e.currentTarget;
+							if (link.getAttribute('aria-busy') === 'true') return;
+							link.setAttribute('aria-busy', 'true');
+							const originalText = link.textContent;
+							link.textContent = 'Redirecting…';
+							fetch('/api/subscription/checkout', {
+								method: 'POST',
+								credentials: 'include',
+								headers: { 'Content-Type': 'application/json' }
+							}).then(function (r) {
+								return r.json().then(function (json) {
+									if (r.ok && json && json.url) {
+										window.location.href = json.url;
+										return;
+									}
+									link.removeAttribute('aria-busy');
+									link.textContent = originalText;
+									alert(json && (json.message || json.error) ? (json.message || json.error) : 'Could not start checkout.');
+								});
+							}).catch(function () {
+								link.removeAttribute('aria-busy');
+								link.textContent = originalText;
+								alert('Could not start checkout.');
+							});
+						});
+					}
+				}
+				if (plan === 'founder' && ctaFreeSwitch) {
+					ctaFreeSwitch.addEventListener('click', function () {
+						const btn = ctaFreeSwitch;
+						if (btn.getAttribute('aria-busy') === 'true') return;
+						const originalText = btn.textContent;
+						btn.setAttribute('aria-busy', 'true');
+						btn.disabled = true;
+						btn.textContent = 'Updating…';
+						fetch('/api/profile/plan', {
+							method: 'PUT',
+							credentials: 'include',
+							headers: { 'Content-Type': 'application/json' },
+							body: JSON.stringify({ plan: 'free' })
+						}).then(function (r) {
+							return r.json().then(function (json) {
+								if (r.ok && json && (json.plan === 'free' || json.plan === 'founder')) {
+									window.location.href = json.plan === 'free' ? '/pricing?switched=free' : '/pricing';
+									return;
+								}
+								btn.removeAttribute('aria-busy');
+								btn.disabled = false;
+								btn.textContent = originalText;
+								alert(json && (json.message || json.error) ? (json.message || json.error) : 'Could not update plan.');
+							}).catch(function () {
+								btn.removeAttribute('aria-busy');
+								btn.disabled = false;
+								btn.textContent = originalText;
+								alert('Could not update plan.');
+							});
+						}).catch(function () {
+							btn.removeAttribute('aria-busy');
+							btn.disabled = false;
+							btn.textContent = originalText;
+							alert('Could not update plan.');
+						});
+					});
+				}
+				showContent();
+			})
+			.catch(function () {
+				injectPlaceholderIcon();
+				function setupGuestHeaderScroll(retries) {
+					retries = retries || 0;
+					if (!document.body.classList.contains('pricing-page-guest') || retries > 20) return;
+					const header = document.querySelector('header');
+					if (!header) {
+						requestAnimationFrame(function () { setupGuestHeaderScroll(retries + 1); });
+						return;
+					}
+					const handleScroll = function () {
+						const scrollY = window.scrollY || window.pageYOffset;
+						if (scrollY > 50) header.classList.add('scrolled');
+						else header.classList.remove('scrolled');
+					};
+					handleScroll();
+					window.addEventListener('scroll', handleScroll, { passive: true });
+				}
+				setupGuestHeaderScroll();
+				showContent();
+			});
+	</script>
+</body>
+
+</html>

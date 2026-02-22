@@ -1,0 +1,291 @@
+.creation-edit-route {
+}
+
+.creation-edit-route .create-form {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+	margin-bottom: 1.5rem;
+}
+
+.creation-edit-route .form-group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.creation-edit-route .form-label {
+	font-size: 0.9rem;
+	font-weight: 500;
+	color: var(--text);
+	display: inline-block;
+}
+
+.creation-edit-route .field-required {
+	display: inline;
+	margin-left: 2px;
+	color: var(--error, #e74c3c);
+}
+
+.creation-edit-route .form-input,
+.creation-edit-route .form-select,
+.creation-edit-route .form-static {
+	padding: 0.75rem 1rem;
+	border-radius: 8px;
+	border: 1px solid var(--border);
+	background: var(--input-bg);
+	color: var(--text);
+	font-size: 0.95rem;
+	font-family: inherit;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.creation-edit-route .form-select {
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	padding-right: 2.25rem;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a0a0a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 0.75rem center;
+	background-size: 1rem;
+	cursor: pointer;
+}
+
+.creation-edit-route .form-input:focus-visible,
+.creation-edit-route .form-select:focus-visible {
+	outline: none;
+	border-color: var(--accent);
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.creation-edit-route .form-input::placeholder {
+	color: var(--text-muted);
+}
+
+.creation-edit-route .form-textarea {
+	resize: none;
+	line-height: 1.35;
+	overflow: hidden;
+}
+
+.creation-edit-route .form-textarea.prompt-editor {
+	overflow-y: auto;
+}
+
+.creation-edit-route .method-context {
+	color: var(--text-muted);
+	font-size: 0.875rem;
+	margin-bottom: 6px;
+}
+
+.creation-edit-route .create-controls {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	align-items: flex-start;
+	margin-top: 1.5rem;
+}
+
+.creation-edit-route .create-cost {
+	font-size: 0.875rem;
+	color: var(--text-muted);
+	margin: 0;
+}
+
+.creation-edit-route .create-cost.insufficient {
+	color: var(--error, #e74c3c);
+	font-weight: 500;
+}
+
+.creation-edit-route .create-button {
+	padding: 10px 20px;
+	background: var(--accent);
+	color: var(--accent-text);
+	border: none;
+	border-radius: 6px;
+	font-size: 0.95rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.creation-edit-route .create-button:hover:not(:disabled) {
+	background: var(--focus);
+	transform: translateY(-1px);
+}
+
+.creation-edit-route .create-button:active:not(:disabled) {
+	transform: translateY(0);
+}
+
+.creation-edit-route .create-button:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+.creation-edit-route .create-note {
+	font-size: 0.875rem;
+	color: var(--text-muted);
+	margin: 0;
+}
+
+.creation-edit-route .image-field {
+	display: flex;
+	align-items: center;
+	gap: 0;
+	min-height: 170px;
+}
+
+.creation-edit-route .image-field-multi {
+	padding: 0;
+	gap: 0;
+	min-height: 120px;
+}
+
+.creation-edit-route .image-field-inputs {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	flex: 1;
+	min-width: 0;
+	padding: 10px 12px;
+}
+
+.creation-edit-route .image-field-inputs .form-input {
+	width: 100%;
+}
+
+.creation-edit-route .image-field-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	align-items: center;
+}
+
+.creation-edit-route .image-paste-btn,
+.creation-edit-route .image-choose-btn {
+	padding: 0.5rem 0.75rem;
+	font-size: 0.875rem;
+	border-radius: 6px;
+	border: 1px solid var(--border);
+	background: var(--input-bg);
+	color: var(--text);
+	cursor: pointer;
+	font-family: inherit;
+	transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.creation-edit-route .image-paste-btn:hover,
+.creation-edit-route .image-choose-btn:hover {
+	background: var(--surface-muted);
+	border-color: var(--text-muted);
+}
+
+.creation-edit-route .image-choose-label {
+	margin: 0;
+	cursor: pointer;
+}
+
+.creation-edit-route .image-field-error {
+	font-size: 0.875rem;
+	color: var(--error, #e74c3c);
+	margin: 0;
+}
+
+.creation-edit-route .form-static.image-field {
+	padding: 0;
+}
+
+.creation-edit-route .image-thumb-wrap {
+	width: 120px;
+	height: 120px;
+	border-radius: 8px 0 0 8px;
+	overflow: hidden;
+	border-right: 1px solid var(--border);
+	background: color-mix(in srgb, var(--text) 6%, transparent);
+	flex: 0 0 auto;
+	position: relative;
+}
+
+.creation-edit-route .image-field-multi .image-thumb-wrap {
+	cursor: default;
+}
+
+@media (max-width: 768px) {
+	.creation-edit-route .image-field-multi {
+		flex-direction: column;
+		align-items: stretch;
+	}
+	.creation-edit-route .image-field-multi .image-thumb-wrap {
+		width: 100%;
+		height: 120px;
+		border-radius: 8px 8px 0 0;
+		border-right: none;
+		border-bottom: 1px solid var(--border);
+	}
+	.creation-edit-route .image-field-multi .image-field-inputs {
+		padding: 10px 12px;
+	}
+}
+
+.creation-edit-route .image-thumb-wrap.loading {
+	background: linear-gradient(90deg, var(--surface-muted), var(--surface-strong), var(--surface-muted));
+	background-size: 200% 100%;
+	animation: loading 4s linear infinite;
+}
+
+.creation-edit-route .image-thumb-wrap.error {
+	background: var(--image-placeholder);
+}
+
+.creation-edit-route .image-thumb-wrap.error::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	margin: auto;
+	width: 56px;
+	height: 56px;
+	background-color: color-mix(in srgb, var(--text) 42%, transparent);
+	-webkit-mask: var(--icon-image-unavailable) center / contain no-repeat;
+	mask: var(--icon-image-unavailable) center / contain no-repeat;
+	opacity: 0.85;
+}
+
+.creation-edit-route .image-thumb {
+	width: 100%;
+	height: 100%;
+	display: block;
+	object-fit: cover;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
+
+.creation-edit-route .image-thumb-wrap.loaded .image-thumb {
+	opacity: 1;
+}
+
+.creation-edit-route .image-meta {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
+	padding: 10px 12px;
+}
+
+.creation-edit-route .image-meta-title {
+	font-size: 0.95rem;
+	font-weight: 500;
+	color: var(--text);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.creation-edit-route .image-meta-subtitle {
+	font-size: 0.85rem;
+	color: var(--text-muted);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}

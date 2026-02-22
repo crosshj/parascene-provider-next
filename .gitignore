@@ -144,3 +144,6 @@ vite.config.ts.timestamp-*
 /.output
 .vercel
 .env*.local
+
+
+.vscode/

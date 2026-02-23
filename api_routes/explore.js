@@ -1,5 +1,5 @@
 import express from "express";
-import { Redis } from "@upstash/redis";
+import Redis from "ioredis";
 import { getThumbnailUrl } from "./utils/url.js";
 
 const MAX_COMMENT_META_SEARCH_IMAGES = 300;
@@ -9,7 +9,7 @@ const SEARCH_IDS_REDIS_TTL_SECONDS = 0.5/*hr*/ * 60/*min*/ * 60/*sec*/; // 0.5 h
 let redis = null;
 function getRedis() {
 	if (!redis) {
-		redis = Redis.fromEnv();
+		redis = new Redis(process.env.REDIS_URL || "redis://redis:6379");
 	}
 	return redis;
 }
@@ -292,7 +292,7 @@ export default function createExploreRoutes({ queries }) {
 						.map((item) => (item && item.created_image_id != null ? Number(item.created_image_id) : null))
 						.filter((id) => Number.isFinite(id) && id > 0);
 					if (idsForCache.length > 0) {
-						await getRedis().set(idsCacheKey, idsForCache, { ex: SEARCH_IDS_REDIS_TTL_SECONDS });
+						await getRedis().set(idsCacheKey, JSON.stringify(idsForCache), "EX", SEARCH_IDS_REDIS_TTL_SECONDS);
 					}
 				} catch {
 					// ignore Redis cache failures

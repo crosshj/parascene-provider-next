@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import express from "express";
-import { Redis } from "@upstash/redis";
+import Redis from "ioredis";
 
 let redis = null;
 function getRedis() {
@@ -71,8 +71,7 @@ export default function createPolicyRoutes() {
 			const body = req.body && typeof req.body === "object" ? req.body : {};
 			const hash = buildFingerprint(req, body);
 			const key = SEEN_KEY_PREFIX + hash;
-			await getRedis().set(key, "1", { ex: FINGERPRINT_TTL_SEC });
-			return res.json({ ok: true, seen: true });
+			await getRedis().set(key, "1", "EX", FINGERPRINT_TTL_SEC); return res.json({ ok: true, seen: true });
 		} catch (err) {
 			return res.status(500).json({ ok: false, error: "policy_unavailable" });
 		}

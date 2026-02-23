@@ -44,15 +44,15 @@ function shouldLogStartup() {
 
 // Handle unhandled promise rejections
 process.on("unhandledRejection", (reason, promise) => {
-	// console.error("Unhandled Promise Rejection:", reason);
+	console.error("Unhandled Promise Rejection:", reason);
 	if (reason instanceof Error) {
-		// console.error("Error stack:", reason.stack);
+		console.error("Error stack:", reason.stack);
 	}
-	// Don't exit in production, but log the error
+	//Don't exit in production, but log the error
 	if (process.env.NODE_ENV === "production") {
-		// console.error("Continuing in production mode...");
+		console.error("Continuing in production mode...");
 	} else {
-		// console.error("Exiting due to unhandled rejection in development");
+		console.error("Exiting due to unhandled rejection in development");
 		process.exit(1);
 	}
 });

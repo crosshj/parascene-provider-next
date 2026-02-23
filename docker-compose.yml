@@ -9,6 +9,8 @@ services:
       - .:/app
       - /app/node_modules
       - ./db/data:/app/db/data 
+    env_file:
+      - .env
     environment:
       - NODE_ENV=dev
       - PORT=2367

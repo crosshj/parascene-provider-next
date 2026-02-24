@@ -1,0 +1,360 @@
+:root {
+	color-scheme: dark, light;
+}
+body {
+	margin: 0;
+	font-family:
+		'Inter',
+		'Segoe UI',
+		system-ui,
+		-apple-system,
+		sans-serif;
+	background: #f7f7f9;
+	color: #1f2933;
+	padding: 24px;
+	max-width: 1400px;
+	margin: 0 auto;
+}
+.app-layout {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+.app-image-panel {
+	aspect-ratio: 1;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #f1f5f9;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	overflow: hidden;
+}
+.app-image-panel.has-content {
+	position: relative;
+	display: block;
+	aspect-ratio: 1;
+	background: transparent;
+	border: none;
+	padding: 0;
+	overflow: hidden;
+}
+.app-image-panel.has-content .success {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1;
+	margin: 0;
+}
+.app-image-panel.has-content img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	object-position: center;
+	border-radius: 6px;
+}
+.app-forms-panel {
+	background: white;
+	border-radius: 8px;
+	padding: 24px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.panel-section {
+	margin-bottom: 32px;
+}
+.panel-section:last-child {
+	margin-bottom: 0;
+}
+.panel-note {
+	color: #616e7c;
+	font-size: 14px;
+	margin: 0 0 16px 0;
+}
+@media (min-width: 800px) {
+	.app-layout {
+		flex-direction: row;
+		align-items: flex-start;
+		gap: 32px;
+	}
+	.app-image-panel {
+		flex: 1 1 50%;
+		min-width: 0;
+		width: auto;
+		position: sticky;
+	}
+	.app-image-panel.has-content {
+		aspect-ratio: 1;
+	}
+	.app-forms-panel {
+		flex: 0 0 360px;
+	}
+}
+h1 {
+	margin-bottom: 8px;
+}
+.subtitle {
+	color: #616e7c;
+	margin-bottom: 32px;
+}
+.form-group {
+	margin-bottom: 16px;
+}
+label {
+	display: block;
+	font-weight: 500;
+	margin-bottom: 6px;
+}
+input[type='text'],
+input[type='password'],
+input[type='url'],
+select,
+textarea {
+	width: 100%;
+	padding: 8px 12px;
+	border: 1px solid #cbd2d9;
+	border-radius: 4px;
+	font-family: inherit;
+	font-size: 14px;
+	box-sizing: border-box;
+}
+textarea {
+	font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+	min-height: 80px;
+}
+button {
+	background: #3b82f6;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 4px;
+	font-weight: 500;
+	cursor: pointer;
+	font-size: 14px;
+}
+button:hover {
+	background: #2563eb;
+}
+button:disabled {
+	background: #cbd2d9;
+	cursor: not-allowed;
+}
+.error {
+	color: #dc2626;
+	background: #fee2e2;
+	padding: 12px;
+	border-radius: 4px;
+	margin-top: 12px;
+}
+.success {
+	color: #059669;
+	background: #d1fae5;
+	padding: 12px;
+	border-radius: 4px;
+	margin-top: 12px;
+}
+pre {
+	background: #f1f5f9;
+	padding: 12px;
+	border-radius: 4px;
+	overflow-x: auto;
+	font-size: 13px;
+}
+.method-option {
+	padding: 8px;
+	border: 1px solid #cbd2d9;
+	border-radius: 4px;
+	margin-bottom: 8px;
+}
+.method-option h4 {
+	margin: 0 0 4px 0;
+}
+.method-option p {
+	margin: 0;
+	font-size: 13px;
+	color: #616e7c;
+}
+.image-placeholder {
+	color: #64748b;
+	font-size: 14px;
+	text-align: center;
+	padding: 24px;
+}
+.app-image-panel.has-content .json-result {
+	position: absolute;
+	inset: 0;
+	margin: 0;
+	padding: 16px;
+	background: #1e293b;
+	color: #e2e8f0;
+	font-size: 13px;
+	line-height: 1.5;
+	overflow: auto;
+	white-space: pre-wrap;
+	word-break: break-word;
+	border-radius: 6px;
+	box-sizing: border-box;
+}
+.app-image-panel .image-loading {
+	color: #64748b;
+	font-size: 14px;
+	text-align: center;
+	padding: 24px;
+}
+.app-image-panel .image-loading::before {
+	content: '';
+	display: block;
+	width: 32px;
+	height: 32px;
+	margin: 0 auto 12px;
+	border: 3px solid #e2e8f0;
+	border-top-color: #3b82f6;
+	border-radius: 50%;
+	animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+	to { transform: rotate(360deg); }
+}
+.app-image-panel .image-dimensions {
+	margin: 0 0 8px 0;
+	font-size: 13px;
+	color: #616e7c;
+}
+.app-image-panel img {
+	display: block;
+	max-width: 100%;
+	max-height: 100%;
+	width: auto;
+	height: auto;
+	object-fit: contain;
+	object-position: center;
+	border-radius: 6px;
+}
+#imageResult {
+	max-width: 100%;
+	max-height: 100%;
+	width: auto;
+	height: auto;
+	object-fit: contain;
+	object-position: center;
+	border-radius: 6px;
+}
+.field-group {
+	padding: 12px;
+	background: #f8fafc;
+	border-radius: 4px;
+	margin: 1em 0;
+}
+.json-toggle {
+	cursor: pointer;
+	user-select: none;
+	padding: 8px 12px;
+	background: #f8fafc;
+	border: 1px solid #e2e8f0;
+	border-radius: 4px;
+	margin-top: 12px;
+	font-size: 13px;
+	color: #64748b;
+	transition: background 0.2s;
+}
+.json-toggle:hover {
+	background: #e2e8f0;
+}
+.json-toggle::before {
+	content: '▶ ';
+	display: inline-block;
+	transition: transform 0.2s;
+}
+.json-toggle.expanded::before {
+	transform: rotate(90deg);
+}
+.json-content {
+	display: none;
+	margin-top: 8px;
+}
+.json-content.expanded {
+	display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		background: #0f172a;
+		color: #e2e8f0;
+	}
+	.subtitle {
+		color: #94a3b8;
+	}
+	.app-forms-panel {
+		background: #1e293b;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+	}
+	.panel-note {
+		color: #94a3b8;
+	}
+	input[type='text'],
+	input[type='password'],
+	input[type='url'],
+	select,
+	textarea {
+		background: #0f172a;
+		border: 1px solid #334155;
+		color: #e2e8f0;
+	}
+	input[type='text']::placeholder,
+	input[type='password']::placeholder,
+	input[type='url']::placeholder,
+	textarea::placeholder {
+		color: #64748b;
+	}
+	button:disabled {
+		background: #334155;
+		color: #64748b;
+	}
+	.error {
+		color: #fca5a5;
+		background: #450a0a;
+	}
+	.success {
+		color: #86efac;
+		background: #052e16;
+	}
+	pre {
+		background: #0f172a;
+		color: #e2e8f0;
+	}
+	.method-option {
+		border: 1px solid #334155;
+	}
+	.method-option p {
+		color: #94a3b8;
+	}
+	.app-image-panel {
+		background: #0f172a;
+		border-color: #334155;
+	}
+	.app-image-panel .image-placeholder,
+	.app-image-panel .image-loading {
+		color: #94a3b8;
+	}
+	.app-image-panel .image-dimensions {
+		color: #94a3b8;
+	}
+	.app-image-panel .image-loading::before {
+		border-color: #334155;
+		border-top-color: #3b82f6;
+	}
+	.field-group {
+		background: #0f172a;
+	}
+	.json-toggle {
+		background: #0f172a;
+		border: 1px solid #334155;
+		color: #94a3b8;
+	}
+	.json-toggle:hover {
+		background: #1e293b;
+	}
+}

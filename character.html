@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
+    <title>Character — parascene-provider</title>
+    <link rel="stylesheet" href="character.css" />
+</head>
+
+<body>
+
+    <div class="app-layout">
+        <div class="app-image-panel" id="characterImageColumn">
+            <div class="character-svg-wrap">
+                <svg viewBox="0 0 1024 1024">
+                    <g class="points-line-mirror-wrap" transform="translate(512,0) scale(-1,1) translate(-512,0)">
+                        <path id="pointsLineMirror" class="points-line-mirror" d="M 512 58.25820541381836 L 537.9752197265625 58.877113342285156 L 592.6652221679688 105.31291198730469 L 581.8444213867188 226.2728271484375 L 547.2108154296875 253.97970581054688 L 547.2108154296875 272.4509582519531 L 616.47802734375 288.6133117675781 L 676.5095825195312 441.0011291503906 L 755.0123901367188 504.4960632324219 L 750.3945922851562 541.4385375976562 L 718.0698852539062 542.593017578125 L 649.9571533203125 468.7080078125 L 586.4622192382812 345.1815185546875 L 604.9334716796875 517.195068359375 L 593.3889770507812 585.3078002929688 L 600.315673828125 742.3134155273438 L 608.3968505859375 900.4735107421875 L 666.1195068359375 970.8951416015625 L 639.5670776367188 997.4475708007812 L 542.593017578125 973.2040405273438 L 536.8207397460938 946.651611328125 L 558.75537109375 757.3212890625 L 529.89404296875 591.0800170898438 L 512 588.7711181640625">
+                        </path>
+                    </g>
+                    <path id="pointsLine" class="points-line" d="M 512 58.25820541381836 L 537.9752197265625 58.877113342285156 L 592.6652221679688 105.31291198730469 L 581.8444213867188 226.2728271484375 L 547.2108154296875 253.97970581054688 L 547.2108154296875 272.4509582519531 L 616.47802734375 288.6133117675781 L 676.5095825195312 441.0011291503906 L 755.0123901367188 504.4960632324219 L 750.3945922851562 541.4385375976562 L 718.0698852539062 542.593017578125 L 649.9571533203125 468.7080078125 L 586.4622192382812 345.1815185546875 L 604.9334716796875 517.195068359375 L 593.3889770507812 585.3078002929688 L 600.315673828125 742.3134155273438 L 608.3968505859375 900.4735107421875 L 666.1195068359375 970.8951416015625 L 639.5670776367188 997.4475708007812 L 542.593017578125 973.2040405273438 L 536.8207397460938 946.651611328125 L 558.75537109375 757.3212890625 L 529.89404296875 591.0800170898438 L 512 588.7711181640625">
+                    </path>
+                    <!-- Head -->
+                    <circle cx="512" cy="58.25820541381836" class=""></circle>
+                    <circle cx="537.9752197265625" cy="58.877113342285156" class=""></circle>
+                    <circle cx="592.6652221679688" cy="105.31291198730469" class=""></circle>
+                    <circle cx="581.8444213867188" cy="226.2728271484375" class=""></circle>
+                    <circle cx="547.2108154296875" cy="253.97970581054688" class=""></circle>
+                    <circle cx="547.2108154296875" cy="272.4509582519531" class=""></circle>
+
+                    <!-- Arm -->
+                    <circle cx="616.47802734375" cy="288.6133117675781" class=""></circle>
+                    <circle cx="676.5095825195312" cy="441.0011291503906" class=""></circle>
+                    <circle cx="755.0123901367188" cy="504.4960632324219" class=""></circle>
+                    <circle cx="750.3945922851562" cy="541.4385375976562" class=""></circle>
+                    <circle cx="718.0698852539062" cy="542.593017578125" class=""></circle>
+                    <circle cx="649.9571533203125" cy="468.7080078125" class=""></circle>
+                    <circle cx="586.4622192382812" cy="345.1815185546875" class=""></circle>
+
+                    <!-- Body -->
+                    <circle cx="604.9334716796875" cy="517.195068359375" class=""></circle>
+                    <circle cx="593.3889770507812" cy="585.3078002929688" class=""></circle>
+
+                    <!-- Leg -->
+                    <circle cx="600.315673828125" cy="742.3134155273438" class=""></circle>
+                    <circle cx="608.3968505859375" cy="900.4735107421875" class=""></circle>
+                    <circle cx="666.1195068359375" cy="970.8951416015625" class=""></circle>
+                    <circle cx="639.5670776367188" cy="997.4475708007812" class=""></circle>
+                    <circle cx="542.593017578125" cy="973.2040405273438" class=""></circle>
+                    <circle cx="536.8207397460938" cy="946.651611328125" class=""></circle>
+                    <circle cx="558.75537109375" cy="757.3212890625" class=""></circle>
+                    <circle cx="529.89404296875" cy="591.0800170898438" class=""></circle>
+                    <circle cx="512" cy="588.7711181640625" class=""></circle>
+                </svg>
+            </div>
+        </div>
+
+        <div class="app-forms-panel">
+            <section class="panel-section">
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="showPointsToggle" checked />
+                        Show points
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="bodyFillColor">Body fill color</label>
+                    <input type="color" id="bodyFillColor" value="#475569" aria-describedby="bodyFillHint" />
+                    <span id="bodyFillValue" class="body-fill-value" aria-live="polite"></span>
+                    <p id="bodyFillHint" class="panel-note">Fill color for the character outline. Saved automatically.</p>
+                </div>
+                <div class="form-group">
+                    <label for="subdivisionLevel">Subdivision level</label>
+                    <select id="subdivisionLevel" aria-describedby="subdivisionHint">
+                        <option value="0">0 (off)</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <p id="subdivisionHint" class="panel-note">Smooths the line like subdivision surfaces: more iterations = smoother curve, control points stay the cage.</p>
+                </div>
+                <button type="button" id="addPointBtn">Add point</button>
+            </section>
+            <section class="panel-section" id="pointTypeSection" style="display: none;">
+                <h2>Point type</h2>
+                <p class="panel-note">How the line is drawn through the selected point.</p>
+                <div class="point-type-buttons">
+                    <button type="button" id="pointTypeCorner">Corner</button>
+                    <button type="button" id="pointTypeSmooth">Smooth</button>
+                    <button type="button" id="pointTypeArc">Arc</button>
+                </div>
+                <div id="arcStrengthWrap" class="form-group" style="display: none;">
+                    <label for="arcStrengthSlider">Arc strength <span id="arcStrengthValue">0.5</span></label>
+                    <input type="range" id="arcStrengthSlider" min="0.1" max="2" step="0.1" value="0.5" />
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script type="module" src="character.js"></script>
+</body>
+
+</html>

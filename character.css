@@ -1,0 +1,227 @@
+:root {
+	color-scheme: dark, light;
+}
+body {
+	margin: 0;
+	font-family:
+		'Inter',
+		'Segoe UI',
+		system-ui,
+		-apple-system,
+		sans-serif;
+	padding: 0;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.app-layout {
+	box-sizing: border-box;
+	display: grid;
+	grid-template-columns: 1fr 350px;
+	grid-template-rows: 1fr;
+	width: 100%;
+	max-width: 1400px;
+	gap: 24px;
+	padding: 24px;
+	box-sizing: border-box;
+}
+
+.app-image-panel {
+	max-height: 100vh;
+	min-width: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.character-svg-wrap {
+	flex: 0 0 auto;
+	width: min(100%, 100vh);
+	max-width: 100%;
+	max-height: calc(100vh - 48px);
+	aspect-ratio: 1;
+}
+
+.character-svg-wrap svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+	background: #000000;
+}
+svg {
+	background: #000000;
+}
+
+#characterImageColumn.points-hidden circle {
+	visibility: hidden;
+	pointer-events: none;
+}
+
+.points-line {
+	fill: var(--character-body-fill, currentColor);
+	fill-opacity: 0.2;
+	stroke: currentColor;
+	stroke-width: 2;
+	stroke-opacity: 0.6;
+}
+
+.points-line-mirror {
+	fill: var(--character-body-fill, currentColor);
+	fill-opacity: 0.2;
+	stroke: currentColor;
+	stroke-width: 2;
+	stroke-opacity: 0.2;
+}
+
+#characterImageColumn circle {
+	r: 8;
+	fill: #94a3b8;
+}
+#characterImageColumn circle[data-point-type="smooth"] {
+	fill: #2dd4bf !important;
+}
+#characterImageColumn circle[data-point-type="arc"] {
+	fill: #fb923c !important;
+}
+#characterImageColumn circle:hover {
+	fill: white !important;
+}
+#characterImageColumn circle[data-point-type="smooth"]:hover {
+	fill: #5eead4 !important;
+}
+#characterImageColumn circle[data-point-type="arc"]:hover {
+	fill: #fdba74 !important;
+}
+#characterImageColumn circle.selected {
+	stroke: white;
+	stroke-width: 3;
+}
+#characterImageColumn circle:not(.selected) {
+	stroke: none;
+}
+
+button {
+	background: #3b82f6;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 4px;
+	font-weight: 500;
+	cursor: pointer;
+	font-size: 14px;
+}
+button:hover {
+	background: #2563eb;
+}
+button.active {
+	background: #059669;
+}
+button.active:hover {
+	background: #047857;
+}
+
+.point-type-buttons {
+	display: flex;
+	gap: 8px;
+}
+
+.app-forms-panel {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.panel-section > button {
+	margin-top: 12px;
+}
+
+.panel-section h2 {
+	margin: 0 0 4px;
+	font-size: 0.95rem;
+	font-weight: 600;
+}
+
+.panel-note {
+	margin: 0 0 12px;
+	font-size: 0.85rem;
+	opacity: 0.75;
+}
+
+.form-group {
+	margin-top: 12px;
+}
+.form-group:first-child {
+	margin-top: 0;
+}
+.form-group label {
+	display: block;
+	font-weight: 500;
+	margin-bottom: 6px;
+}
+.form-group label:has(input[type="checkbox"]) {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 0;
+	cursor: pointer;
+}
+
+.form-group input[type="checkbox"] {
+	appearance: none;
+	width: 1.125rem;
+	height: 1.125rem;
+	border: 2px solid color-mix(in srgb, currentColor 35%, transparent);
+	border-radius: 4px;
+	background: transparent;
+	cursor: pointer;
+	flex-shrink: 0;
+	transition: border-color 0.15s, background 0.15s;
+}
+.form-group input[type="checkbox"]:hover {
+	border-color: color-mix(in srgb, currentColor 55%, transparent);
+}
+.form-group input[type="checkbox"]:checked {
+	background: #3b82f6;
+	border-color: #3b82f6;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' d='M2 6l3 3 5-6'/%3E%3C/svg%3E");
+}
+.form-group input[type="checkbox"]:focus-visible {
+	outline: 2px solid #3b82f6;
+	outline-offset: 2px;
+}
+.form-group input[type="range"] {
+	width: 100%;
+	margin-top: 6px;
+	accent-color: #3b82f6;
+}
+.form-group #arcStrengthValue {
+	opacity: 0.8;
+	font-weight: normal;
+}
+.form-group input[type="color"] {
+	display: block;
+	width: 100%;
+	max-width: 120px;
+	height: 2.5rem;
+	padding: 2px;
+	border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+	border-radius: 6px;
+	background: transparent;
+	cursor: pointer;
+}
+.form-group .body-fill-value {
+	display: block;
+	margin-top: 4px;
+	font-size: 0.875rem;
+	opacity: 0.85;
+}
+
+.point-type-buttons {
+	flex-wrap: wrap;
+}
+.point-type-buttons button {
+	flex: 1;
+	min-width: 0;
+}

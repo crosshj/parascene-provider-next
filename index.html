@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>parascene-provider</title>
+		<link rel="stylesheet" href="index.css" />
+	</head>
+	<body>
+		<div class="app-layout">
+			<!-- Left: image only -->
+			<div class="app-image-panel" id="generationImageColumn">
+				<div class="image-placeholder" id="imagePlaceholder">Generated image will appear here</div>
+			</div>
+
+			<!-- Right: all forms in one panel -->
+			<div class="app-forms-panel">
+				<section class="panel-section">
+					<h2>1. Authentication & Capabilities</h2>
+					<div class="form-group">
+						<label for="authToken">API Token</label>
+						<input type="password" id="authToken" placeholder="Enter your Bearer token" />
+					</div>
+					<button onclick="fetchCapabilities()">Fetch Capabilities (GET)</button>
+					<div id="getResult"></div>
+				</section>
+
+				<section class="panel-section" id="generationSection" style="display: none">
+					<h2>2. Generation Settings</h2>
+					<p class="panel-note">
+						For edit methods like <code>fluxImageEdit</code>, provide an
+						<code>image_url</code> that this server can download.
+						For <strong>Advanced Generate</strong>: use <strong>Generate from items</strong> for full-size Flux 2 Pro; <strong>Generate 999×999</strong> for Flux 2 Pro at just under 1MP (same items + prompt); <strong>Outpaint 1024→16:9</strong> to expand a 1024×1024 image to 1824×1024 via Flux Pro Fill (Image URL + optional prompt).
+					</p>
+					<div class="form-group">
+						<label for="method">Generation Method</label>
+						<select id="method" onchange="updateMethodFields()">
+							<option value="">Select a method...</option>
+						</select>
+					</div>
+					<div id="methodFields"></div>
+					<button onclick="generateImage()" id="generateBtn" disabled>
+						Generate Image (POST)
+					</button>
+				</section>
+			</div>
+		</div>
+
+		<script type="module" src="index.js"></script>
+	</body>
+</html>
